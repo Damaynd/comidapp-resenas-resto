@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Cuisine(models.Model):
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100, unique = True)
     def __str__(self): return self.name
 
 class Restaurant(models.Model):
@@ -23,18 +23,18 @@ class Restaurant(models.Model):
 
 class DietaryTag(models.Model):
     code = models.SlugField(max_length = 100, unique = True)
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100, unique = True)
     def __str__(self): return self.name
 
 class AccessibilityFeature(models.Model):
     code = models.SlugField(max_length = 100, unique = True)
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100, unique = True)
     def __str__(self): return self.name
 
 class Dish(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'dishes')
     name = models.CharField(max_length = 100)
-    description = models.TextField(max_length = 100)
+    description = models.TextField(blank = True)
     price_ref = models.IntegerField(default = 0)
     tags = models.ManyToManyField(DietaryTag, through = "DishDietary", blank = True)
 
@@ -61,7 +61,7 @@ class Photo(models.Model):
                 ("dish", "dish")]
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, null = True, blank = True)
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'photos')
-    dish = models.ForeignKey(Dish, on_delete = models.SET_NULL, related_name = 'photos')
+    dish = models.ForeignKey(Dish, on_delete = models.SET_NULL, null = True, related_name = 'photos')
     category = models.CharField(max_length = 20, choices = CATEGORY)
     path = models.CharField(max_length = 300)
     taken_at = models.DateField(null = True, blank = True)
