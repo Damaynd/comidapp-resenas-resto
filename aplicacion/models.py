@@ -49,3 +49,15 @@ class DishDietary(models.Model):
 
     class Meta:
         unique_together = ('dish', 'tag')
+
+class RestaurantAccessibilityReport(models.Model):
+    SOURCE = [("owner", "owner"), ("user", "user")]
+    STATUS = [("pending", "pending"), ("accepted", "accepted"), ("rejected", "rejected")]
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'access_reports')
+    feature = models.ForeignKey(AccessibilityFeature, on_delete = models.CASCADE)
+    source_type = models.CharField(max_length = 20, choices = SOURCE)
+    status = models.CharField(max_length = 20, choices = STATUS, default = "pending")
+    notes = models.TextField(blank = True, null = True)
+    photo = models.ForeignKey(Photo, on_delete = models.SET_NULL, null = True, blank = True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.SET_NULL, null = True, blank = True)
+    created_at = models.DateTimeField(auto_now_add = True)
