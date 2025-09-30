@@ -69,3 +69,6 @@ class Review(models.Model):
     comment = models.TextField(max_length = 500)
     price_paid = models.IntegerField(default = 0)
     created_at = models.DateTimeField(auto_now_add = True)
+
+    class Meta:
+        indexes = [models.Index(fields = ['dish', 'created_at']), models.Index(fields = ["user", "created_at"])]
