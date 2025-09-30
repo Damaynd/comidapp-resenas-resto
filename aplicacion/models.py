@@ -35,7 +35,7 @@ class Dish(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'dishes')
     name = models.CharField(max_length = 100)
     description = models.TextField(max_length = 100)
-    price_ref = models.DecimalField(max_digits = 10, decimal_places = 2, null = True, blank = True)
+    price_ref = models.IntegerField(default = 0)
     tags = models.ManyToManyField(DietaryTag, through = "DishDietary", blank = True)
 
     class Meta:
