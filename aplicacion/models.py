@@ -15,5 +15,11 @@ class Restaurant(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     def __str__(self): return self.name
 
+class Cuisine(models.Model):
+    name = models.CharField(max_length = 100)
+    def __str__(self): return self.name
+
+
+
 
 # Create your models here.
