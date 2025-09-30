@@ -20,7 +20,12 @@ class Cuisine(models.Model):
     def __str__(self): return self.name
 
 class DietaryTag(models.Model):
-    code = models.SlugField(max_length = 100)
+    code = models.SlugField(max_length = 100, unique = True)
+    name = models.CharField(max_length = 100)
+    def __str__(self): return self.name
+
+class AccessibilityFeatures(models.Model):
+    code = models.SlugField(max_length = 100, unique = True)
     name = models.CharField(max_length = 100)
     def __str__(self): return self.name
 
