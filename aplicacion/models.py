@@ -72,3 +72,19 @@ class Review(models.Model):
 
     class Meta:
         indexes = [models.Index(fields = ['dish', 'created_at']), models.Index(fields = ["user", "created_at"])]
+
+class Photo(models.Model):
+    CATEGORY = [("kitchen", "kitchen"),
+                ("bathroom", "bathroom"),
+                ("tables", "tables"),
+                ("entrance", "entrance"),
+                ("menu", "menu"),
+                ("dish", "dish")]
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, null = True, blank = True)
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'photos')
+    dish = models.ForeignKey(Dish, on_delete = models.SET_NULL, related_name = 'photos')
+    category = models.CharField(max_length = 20, choices = CATEGORY)
+    path = models.CharField(max_length = 300)
+    taken_at = models.DateField(null = True, blank = True)
+    is_approved = models.BooleanField(default = False)
+    created_at = models.DateTimeField(auto_now_add = True)
