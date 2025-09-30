@@ -24,10 +24,28 @@ class DietaryTag(models.Model):
     name = models.CharField(max_length = 100)
     def __str__(self): return self.name
 
-class AccessibilityFeatures(models.Model):
+class AccessibilityFeature(models.Model):
     code = models.SlugField(max_length = 100, unique = True)
     name = models.CharField(max_length = 100)
     def __str__(self): return self.name
 
+class Dish(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'dishes')
+    name = models.CharField(max_length = 100)
+    description = models.TextField(max_length = 100)
+    price_ref = models.DecimalField(max_digits = 10, decimal_places = 2, null = True, blank = True)
+    tags = models.ManyToManyField(DietaryTag, through = "DishDietary", blank = True)
 
-# Create your models here.
+    class Meta:
+        unique_together = ('restaurant', 'name')
+
+    def __str__(self): return f"{self.name} @ {self.restaurant.name}"
+
+class DishDietary(models.Model):
+    dish = models.ForeignKey(Dish, on_delete = models.CASCADE)
+    tag = models.ForeignKey(DietaryTag, on_delete = models.CASCADE)
+    evidence = models.CharField(max_length = 20, choices = [("owner", "owner"), ("label", "label"), ("user_report", "user_report")], default = "user_report")
+    cross_contamination = models.BooleanField(default = True)
+
+    class Meta:
+        unique_together = ('dish', 'tag')
