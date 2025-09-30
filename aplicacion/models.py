@@ -61,3 +61,11 @@ class RestaurantAccessibilityReport(models.Model):
     photo = models.ForeignKey(Photo, on_delete = models.SET_NULL, null = True, blank = True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.SET_NULL, null = True, blank = True)
     created_at = models.DateTimeField(auto_now_add = True)
+
+class Review(models.Model):
+    dish = models.ForeignKey(Dish, on_delete = models.CASCADE, related_name = 'reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    rating = models.FloatField()
+    comment = models.TextField(max_length = 500)
+    price_paid = models.IntegerField(default = 0)
+    created_at = models.DateTimeField(auto_now_add = True)
