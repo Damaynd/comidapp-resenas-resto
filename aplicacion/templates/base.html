@@ -1,0 +1,31 @@
+{% load static %} <!--Para cargar css-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Base para la parte de arriba</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static "styles/main.css" %}"> <!--Para cargar css-->
+    </head>
+    <body>
+<!-- Crea links para clickear -->
+<nav class="navbar container"> 
+    <ul>
+        <li>
+            <a href="/">
+                Inicio
+            </a>
+        </li>
+ 
+</nav>
+
+<!-- Esto indica que abajo de la plantilla ira el contenido de la pagina-->
+<main class="container">
+{% block contenido %}
+{% endblock  %}
+</main>
+    </body>
+</html>
