@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aqui estas viendo un restaurante al que hiciste click</title>
+</head>
+<body>
+    <h1>Aqui estas viendo un restaurante al que hiciste click</h1>
+    <h2>{{ restaurante.name }}</h2>
+    <p>Dirección: {{ restaurante.address }}</p>
+    <p>Precio: {{ restaurante.price }}</p>
+    <p>Rating: {{ restaurante.avg_rating }}</p>
+    <p>Reviews: {{ restaurante.review_count }}</p>
+</body>
+</html>
+{% endblock  %}
