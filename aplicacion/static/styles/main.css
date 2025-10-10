@@ -1,35 +1,35 @@
+*{
+    margin: 0;
+
+}
 body{                       
     background: white !important;
     background-color: white !important;
     color: black !important;
 }
-
-.navbar{
-    background: #787373;
+.header{
+    display:flex;
+    justify-content: space-between;
+    height:50px;
+    background-color: coral;
+    align-items: center;
 }
 
-.navbar ul{
-    display: flex; /*Para verlo de lado*/
-    justify-content: space-between; /*Para que tengan un espacio*/
-}
-
-.navbar ul li{ 
-    list-style: none; /*Quita los puntos al lado de cada link*/
-}
-
-.navbar ul li a{
+.header a{
     color: white;
     text-decoration: none; /*Quita la barrita fea de cuando se clickea*/
 }
 
-.navbar ul li a:hover { /*Cuando se pasa el mouse por encima*/
+.header a:hover { /*Cuando se pasa el mouse por encima*/
     color: magenta
 }
 
-.container{
-    max-width: 1200px; /*Se restringe a un espacio*/
-    /*background: blue; /*mientras, para verlo*/
-    margin: auto; /*se centra automatico*/
-    padding: 20px 10px;
+.logo{
+    float:left;
+    line-height: 70px;
 }
 
+/* menú lateral
+*/
+
+/*fin menú lateral*/
