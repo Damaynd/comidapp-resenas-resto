@@ -1,35 +1,9 @@
-*{
-    margin: 0;
-
+a{
+    text-decoration: none;
+    color: mediumspringgreen;
 }
 body{                       
-    background: white !important;
-    background-color: white !important;
+    background: mintcream !important;
+    background-color: mintcream !important;
     color: black !important;
 }
-.header{
-    display:flex;
-    justify-content: space-between;
-    height:50px;
-    background-color: coral;
-    align-items: center;
-}
-
-.header a{
-    color: white;
-    text-decoration: none; /*Quita la barrita fea de cuando se clickea*/
-}
-
-.header a:hover { /*Cuando se pasa el mouse por encima*/
-    color: magenta
-}
-
-.logo{
-    float:left;
-    line-height: 70px;
-}
-
-/* menú lateral
-*/
-
-/*fin menú lateral*/

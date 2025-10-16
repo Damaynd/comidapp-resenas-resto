@@ -10,21 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "styles/main.css" %}"> <!--Para cargar css-->
     </head>
-    <body>
+<body>
 <!-- Crea links para clickear -->
-<header class="header">
-    <a href="base.html" class="logo">
-        <h1>ComidApp</h1>
-    </a>
-    <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#">Restaurantes</a>
-        <a href="#">Promociones</a>
-        <a href="#">Sobre Nosotros</a>
-    </nav>
-</header>
-
-
+{% include "header.html" %}
 <!-- Esto indica que abajo de la plantilla ira el contenido de la pagina-->
 <main class="container">
 {% block contenido %}
