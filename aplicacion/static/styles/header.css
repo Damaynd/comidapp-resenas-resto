@@ -5,9 +5,8 @@
 .header{
     display:flex;
     justify-content: space-between;
-    height:75px;
-    background-color: mediumspringgreen;
-    align-items: center;
+    height:45px;
+    background-color: seagreen;
     padding: 10px;
     overflow: hidden;
 }
@@ -18,15 +17,14 @@
 
 .header a{
     float: left;
-    font-size: 16px;
-    color: mintcream;
-    text-align: center;
-    padding: 14px 16px;
+    font-size: 13px;
+    color: honeydew;
+    text-align: right;
     text-decoration: none;/*Quita la barrita fea de cuando se clickea*/
 }
 
 .header a:hover { /*Cuando se pasa el mouse por encima*/
-    color: darkgreen;
+    color: mediumseagreen;
 }
 
 .logo{
@@ -37,6 +35,8 @@
 /* el contenedor de la cuenta */
 .dropdown {
   overflow: hidden;
+  float: left;
+  margin-top: 2.6%;
 }
 
 /* el botón del contenedor */
@@ -44,7 +44,7 @@
   font-size: 16px;
   border: none;
   outline: none;
-  color: mintcream;
+  color: honeydew;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit; /* Important for vertical align on mobile phones */
@@ -54,7 +54,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: aquamarine;
+  background-color: lightgoldenrodyellow;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -71,11 +71,20 @@
 }
 
 .dropdown-content a:hover {
-  background-color: aquamarine;
-  color: darkcyan ;
+  background-color: darkseagreen;
+  color: honeydew;
 }
 
 /* mostrar los contenidos al pasar por encima*/
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.header input[type=text] {
+  float: left;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
 }
