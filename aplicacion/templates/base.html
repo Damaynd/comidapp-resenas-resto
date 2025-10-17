@@ -10,18 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "styles/main.css" %}"> <!--Para cargar css-->
     </head>
-    <body>
+<body>
 <!-- Crea links para clickear -->
-<nav class="navbar container"> 
-    <ul>
-        <li>
-            <a href="/">
-                Inicio
-            </a>
-        </li>
- 
-</nav>
-
+{% include "header.html" %}
 <!-- Esto indica que abajo de la plantilla ira el contenido de la pagina-->
 <main class="container">
 {% block contenido %}
