@@ -12,11 +12,22 @@
     </head>
 <body>
 <!-- Crea links para clickear -->
+{% block header %}
 {% include "header.html" %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block filtro %}
+{% endblock %}
 <!-- Esto indica que abajo de la plantilla ira el contenido de la pagina-->
 <main class="container">
 {% block contenido %}
 {% endblock  %}
+
+{% block footer %}
+{% endblock %}
 </main>
     </body>
 </html>
