@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contenido %}
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Inicio</title>
+</head>
+<body>
+    <div>
+        <h2>Lista de Restaurantes</h2>
+        <ul>
+            {% for restaurante in restaurantes %}
+                <li>
+                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
+                        {{ restaurante.name }} - {{ restaurante.address }}
+                    </a>
+                </li>
+            {% empty %}
+                <li>No hay restaurantes disponibles.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock  %}
