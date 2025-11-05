@@ -9,15 +9,35 @@
     <div>
         <h2>Lista de Restaurantes</h2>
         <ul>
-            {% for restaurante in restaurantes %}
-                <li>
-                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
-                        {{ restaurante.name }} - {{ restaurante.address }}
-                    </a>
-                </li>
-            {% empty %}
-                <li>No hay restaurantes disponibles.</li>
-            {% endfor %}
+            <div class="all-restaurant-container">
+                {% for restaurante in restaurantes %}
+                    <div class="single-restaurant-container">
+                        <li>
+                            <div class="restaurant-name-adress">
+                                <div class="restaurant-name">
+                                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
+                                        {{ restaurante.name }}
+                                    </a>
+                                </div>
+                                <div class="restaurant-adress">
+                                    <p>{{ restaurante.address }}</p>
+                                </div>
+                            </div>
+                            <div class="restaurant-image">
+                                
+                            </div>
+                            <div class="restaurant-description">
+
+                            </div>
+                            <div class="restaurant-tags">
+
+                            </div>
+                        </li>
+                    </div>
+                {% empty %}
+                    <li>No hay restaurantes disponibles.</li>
+                {% endfor %}
+            </div>
         </ul>
     </div>
 </body>
