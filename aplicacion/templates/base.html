@@ -5,28 +5,39 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Base para la parte de arriba</title>
+        <title>{%block title%} - {% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "styles/main.css" %}"> <!--Para cargar css-->
+
+        <!--Ya que el Header es un componente que se comparte entre todas las vistas-->
+        <link rel="stylesheet" href="{% static "styles/header.css" %"> 
+        
+        {% block extra_css %}
+        {% endblock %}
     </head>
 <body>
-<!-- Crea links para clickear -->
-{% block header %}
-{% include "header.html" %}
-{% endblock %}
 
-{% block navbar %}
-{% endblock %}
+<!--Header incluirá la navbar junto a los links para clickear-->
+{% include '_componentes/header.html' %}
 
-{% block filtro %}
-{% endblock %}
-<!-- Esto indica que abajo de la plantilla ira el contenido de la pagina-->
+
+<!--Content block for differents contents-->
+
 <main class="container">
-{% block contenido %}
+{% block content %}
+
+    <!--esto debe ir en la vista donde va el botón filter, es decir, en la homepage-->
+        <!--{% include '_componentes/filter.html' %} -->
+
 {% endblock  %}
 </main>
+
+<footer>
 {% block footer %}
 {% endblock %}
-    </body>
+</footer>
+
+</body>
+
 </html>
