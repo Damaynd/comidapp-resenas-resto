@@ -1,0 +1,38 @@
+id,code,name,category
+1,strogonoff-de-vacuno,strogonoff de vacuno,plato-fondo
+2,risotto-champinon,risotto champinon,plato-fondo
+3,hamburguesa,hamburguesa,sandwich
+4,salmon-a-la-plancha,salmon a la plancha,plato-fondo
+5,papas-fritas,papas fritas,acompanamiento
+6,cazuela-de-vacuno,cazuela de vacuno,plato-fondo
+7,pastel-de-choclo,pastel de choclo,plato-fondo
+8,porotos-con-riendas,porotos con riendas,plato-fondo
+9,porotos-granados,porotos granados,plato-fondo
+10,pernil,pernil,plato-fondo
+11,pescado-frito,pescado frito,plato-fondo
+12,completo,completo,sandwich
+13,costillar,costillar,plato-fondo
+14,sopaipillas-pasadas,sopaipillas pasadas,postre
+15,menu-restaurante,menu restaurante,menu
+16,pizza,pizza,principal
+17,spaghetti-bolognesa,spaghetti bolognesa,pasta
+18,lasagna,lasagna,pasta
+19,sushi,sushi,principal
+20,pollo-a-la-mantequilla,pollo a la mantequilla,plato-fondo
+21,curry-de-camarones,curry de camarones,plato-fondo
+22,ramen,ramen,sopa
+23,gyozas,gyozas,entrada
+24,ceviche,ceviche,entrada
+25,pulpo-a-la-parrilla,pulpo a la parrilla,plato-fondo
+26,cerveza,cerveza,bebida
+27,barros-luco,barros luco,sandwich
+28,pisco-sour,pisco sour,bebida
+29,crudo,crudo,entrada
+30,machas,machas,entrada
+31,vino,vino,bebida
+32,parrillada,parrillada,plato-fondo
+33,te,te,bebida
+34,esparragos,esparragos,entrada
+35,empanada,empanada,entrada
+36,pastel-de-papas,pastel de papas,plato-fondo
+37,churrasco,churrasco,sandwich
