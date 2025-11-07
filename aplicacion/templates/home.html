@@ -13,11 +13,19 @@
                 {% for restaurante in restaurantes %}
                     <div class="single-restaurant-container">
                         <li>
-                            <div class="restaurant-name-adress">
-                                <div class="restaurant-name">
-                                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
+                            <div class="restaurant-name-address-rating">
+                                <div class="restaurant-name-rating">
+                                    <div class="restaurant-name">
+                                        <a href="{% url 'detalle_restaurante' restaurante.id %}">
                                         {{ restaurante.name }}
-                                    </a>
+                                        </a>
+                                    </div>
+                                    <div class="restaurant-rating">
+                                        <p>Rating: {{restaurante.avg_rating}}</p>
+                                    </div>
+                                    <div class="restaurant-fav">
+                                        <p>si</p>
+                                    </div>
                                 </div>
                                 <div class="restaurant-address">
                                     <p>{{ restaurante.address }}</p>
@@ -25,10 +33,13 @@
                             </div>
                             <div class="restaurant-image">
                             </div>
-                            <div class="restaurant-description">
-                                {% for dish in restaurante.dish %}
-                                    <li>dish</li>
-                                {% endfor %}
+                            <div class="restaurant-description-price">
+                                <div class="restaurant-description">
+                                    <p>Restaurant familiar</p>
+                                </div>
+                                <div class="restaurant-price">
+                                    <p> Rango de precio: {{restaurante.price}}</p>
+                                </div>
                             </div>
                             <div class="restaurant-tags">
                                 <p>{{restaurant.tag}}</p>
