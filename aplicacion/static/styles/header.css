@@ -1,0 +1,111 @@
+/* Header verde coherente con la paleta */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  background: var(--brand);
+  padding: 0 1.5rem;
+  color: #fff;
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid color-mix(in oklab, var(--brand) 70%, black);
+}
+
+.header .logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: .3px;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.header .logo:hover { opacity: .9; }
+
+.menu { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+
+/* Buscador */
+.search-form input[type="text"] {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .4rem .6rem;
+  color: var(--fg);
+  font-size: .9rem;
+  width: 180px;
+  outline: none;
+  transition: border .2s, box-shadow .2s;
+}
+.search-form input[type="text"]:focus {
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 40%, transparent);
+}
+
+/* Enlaces del header */
+.header a {
+  font-size: .95rem;
+  color: #fff;
+  text-decoration: none;
+  padding: .4rem .75rem;
+  border-radius: 8px;
+  transition: background .2s;
+}
+.header a:hover {
+  background: color-mix(in oklab, var(--brand-700) 80%, white);
+  color: #fff;
+}
+
+/* Dropdown */
+.dropdown { position: relative; }
+.dropbtn {
+  background: transparent;
+  border: 1px solid color-mix(in oklab, var(--brand-800) 70%, white);
+  color: #fff;
+  font-size: .95rem;
+  cursor: pointer;
+  padding: .45rem .8rem;
+  border-radius: 8px;
+  transition: background .2s, border-color .2s;
+}
+.dropbtn:hover {
+  background: color-mix(in oklab, var(--brand-700) 70%, white);
+  border-color: color-mix(in oklab, var(--brand) 40%, white);
+}
+
+/* Puente invisible que evita que se “corte” el hover al bajar el mouse */
+.dropdown-content::before {
+  content: "";
+  position: absolute;
+  top: -8px;           /* cubre el espacio entre botón y menú */
+  left: 0;
+  right: 0;
+  height: 8px;
+  /* invisible, pero capta el hover */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  min-width: 160px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+.dropdown-content a {
+  display: block;
+  padding: .6rem .8rem;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-soft);
+}
+.dropdown-content a:hover {
+  background: color-mix(in oklab, var(--brand) 20%, var(--panel));
+}
+.dropdown:hover .dropdown-content { display: block; }
+
+/* Limpia floats antiguos por si quedan */
+.header a, .logo, .dropdown { float: none !important; }

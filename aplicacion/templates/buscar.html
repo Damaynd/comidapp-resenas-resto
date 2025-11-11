@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Buscar{% endblock %}
+{% block contenido %}
+  <h1>Buscar</h1>
+  <p>Término: <strong>{{ q }}</strong></p>
+  {% if resultados %}
+    <ul>
+      {% for r in resultados %}
+        <li>{{ r }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Sin resultados.</p>
+  {% endif %}
+{% endblock %}

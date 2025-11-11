@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}Mi sitio{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Estilos base (variables, modo oscuro, etc.) -->
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+  <!-- Estilos del header (usa variables de style.css) -->
+  <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+</head>
+<body>
+
+{% block header %}
+  {% include "_componentes/header.html" %}
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block filtro %}{% endblock %}
+
+<main class="container">
+  {% block contenido %}{% endblock %}
+</main>
+
+{% block footer %}{% endblock %}
+
+</body>
+</html>
+

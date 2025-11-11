@@ -1,0 +1,13 @@
+id,code,name,scope,group
+1,vegan,vegano,both,dietary
+2,vegetarian,vegetariano,both,dietary
+3,sin-gluten,sin gluten,both,dietary
+4,pet-friendly,pet friendly,restaurant,feature
+5,accesible,accesible,restaurant,feature
+6,musica-en-vivo,musica en vivo,restaurant,feature
+7,zona-fumadores,zona fumadores,restaurant,feature
+8,opciones-saludables,opciones saludables,both,feature
+9,delivery,delivery,restaurant,feature
+10,take-away,take away,restaurant,feature
+11,kid-friendly,kid friendly,restaurant,feature
+12,late-night,late night,restaurant,feature
