@@ -1,22 +1,23 @@
-{% load static %} <!--Para cargar css-->
-
 <header class="header">
-    <!--Debería resetear la página de inicio entonces, href="Homepage.html"?-->
-    <a href="base.html" class="logo">
-        <h1>ComidApp</h1>
-    </a>
-    <nav class="menu">
-        <input type="text" placeholder="search...">
-        <div class="dropdown">
-            <button class="dropbtn">Mi Cuenta
-            <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-            <a href="#">Perfil</a>
-            <a href="#">Favoritos</a>
-            <a href="#">Rese&ntildeas</a>
-            </div>
-        </div>
-    </nav>
+  <!-- Logo -->
+  <a href="/" class="logo">ComidApp</a>
+
+  <!-- Navegación / Buscador / Cuenta -->
+  <nav class="menu">
+    <!-- Buscador -->
+    <form action="{% url 'buscar' %}" method="get" class="search-form">
+      <input type="text" name="q" placeholder="Buscar...">
+    </form>
+
+    <!-- Menú desplegable de cuenta -->
+    <div class="dropdown">
+      <button class="dropbtn">Mi Cuenta ▾</button>
+      <div class="dropdown-content">
+        <a href="{% url 'perfil' %}">Perfil</a>
+        <a href="{% url 'favoritos' %}">Favoritos</a>
+        <a href="{% url 'resenas' %}">Reseñas</a>
+      </div>
+    </div>
+  </nav>
 </header>
 
