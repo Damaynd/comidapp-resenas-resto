@@ -1,9 +1,68 @@
-a{
-    text-decoration: none;
-    color: seagreen;
+/* Paleta y base del sitio */
+html { color-scheme: light dark; }  /* ayuda a que inputs/scrollbars sigan el tema */
+
+:root {
+  --bg: #f5f6f4;
+  --panel: #ffffff;
+  --elev: #ecf4ee;
+  --fg: #1b3a2e;
+  --muted: #4d665b;
+
+  /* Verde marca */
+  --brand: #2e8b57;      /* seagreen */
+  --brand-700: #26724a;
+  --brand-800: #1f5a3d;
+
+  --ok: #2ecc71;
+  --warn: #f7b500;
+  --danger: #e74c3c;
+
+  --border: #c5d1c8;
+  --border-soft: #dde5df;
+  --radius: 12px;
+  --shadow: 0 4px 14px rgba(0,0,0,0.1);
 }
-body{                       
-    background: palegreen !important;
-    background-color: palegreen !important;
-    color: black !important;
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121915;
+    --panel: #1a221c;
+    --elev: #223027;
+    --fg: #e9f3ed;
+    --muted: #a3b5aa;
+
+    /* Verdes más brillantes en oscuro */
+    --brand: #3cb371;     /* mediumseagreen */
+    --brand-700: #2e8b57;
+    --brand-800: #226f45;
+
+    --border: #324036;
+    --border-soft: #28332b;
+    --shadow: 0 4px 18px rgba(0,0,0,0.5);
+  }
 }
+
+/* Fondo, texto y tipografía base */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Títulos y enlaces */
+h1, h2, h3 { margin: 0 0 .75rem 0; color: var(--brand); }
+a { color: color-mix(in oklab, var(--brand) 90%, #006400); }
+a:hover { text-decoration: underline; }
+
+/* Inputs genéricos (para que sigan el tema) */
+input[type="text"], input[type="search"] {
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .45rem .6rem;
+}
+input::placeholder { color: var(--muted); }
+
+.container { width: min(1100px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }

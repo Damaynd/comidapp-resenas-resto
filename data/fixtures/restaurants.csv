@@ -1,0 +1,22 @@
+id,name,address,lat,lon,price,url,avg_rating,review_count
+1,Castillo Forestal,"Jose Miguel de la Barra 120, Santiago",-33.45,-70.65,3,https://castilloforestal.cl/,0,0
+2,Don Peyo,"Av. Jose Pedro Alessandri 2191, Nunoa",-33.46,-70.6,3,https://toto.menu/peyo,0,0
+3,El Hoyo,"San Vicente 375, Santiago",-33.45,-70.65,3,https://www.elhoyo.cl/,0,0
+4,La Piojera,"Aillavilu 1030, Santiago",-33.45,-70.65,1,https://lapiojera.cl/,0,0
+5,Las Lanzas,"Plaza Nunoa 40, Nunoa",-33.46,-70.6,1,https://www.facebook.com/laslanzasnunoa#,0,0
+6,Borago,"Av. Nueva Costanera 3467, Vitacura",-33.4,-70.58,5,https://borago.cl/,0,0
+7,Golfo Di Napoli,"Av. Italia 1029, Providencia",-33.43,-70.61,3,https://golfodinapoli.cl/,0,0
+8,DonDoh,"Isidora Goyenechea 2800, Las Condes",-33.41,-70.57,4,https://dondoh.com/,0,0
+9,Ambrosia Bistro,"Nueva de Lyon 99, Providencia",-33.43,-70.61,5,https://mercat.ambrosiabistro.cl/,0,0
+10,Tanaka,"Av. Alonso de Cordova 3854, Vitacura",-33.4,-70.58,5,https://tanaka.cl/,0,0
+11,Peumayen,"Constitucion 136, Providencia",-33.43,-70.61,5,https://www.peumayenchile.cl/,0,0
+12,El Honesto Mike,"Av. Italia 1328, Nunoa",-33.46,-70.6,3,https://www.elhonestomike.cl/,0,0
+13,Tiramisu,"Av. Isidora Goyenechea 3141, Las Condes",-33.41,-70.57,3,https://www.tiramisu.cl/,0,0
+14,Liguria,"Av. Providencia 1373, Providencia",-33.43,-70.61,3,https://www.liguria.cl/,0,0
+15,Del Beto,"Av. Recoleta 1556, Recoleta",-33.43,-70.64,3,https://delbeto.cl/,0,0
+16,La Cabrera al Paso,"Isidora Goyenechea 3000, Las Condes",-33.41,-70.57,3,https://lacabreraalpaso.cl/,0,0
+17,Yum Cha,"Isidora Goyenechea 2800, Las Condes",-33.41,-70.57,5,https://yumcha.cl/,0,0
+18,Salvador Cocina y Cafe,"Av. Salvador 1230, Providencia",-33.43,-70.61,3,,0,0
+19,Na Que Ver Cocineria Chilena,"Monjitas 755, Santiago",-33.45,-70.65,1,https://www.naquevercocineria.cl/,0,0
+20,Fuente Rica Rica,"Huerfanos 1377, Santiago",-33.45,-70.65,2,https://www.ricaricadelivery.cl/pedir,0,0
+
