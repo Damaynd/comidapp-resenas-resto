@@ -23,6 +23,8 @@ def perfil(request):
 def favoritos(request):
     return render(request, 'favoritos.html')
 
-
 def resenas(request):
     return render(request, 'resenas.html')
+
+def forms(request):
+    return render(request, 'forms.html')

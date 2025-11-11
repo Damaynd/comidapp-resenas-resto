@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{%block title%} - {% endblock %}</title>
+        <title>{% block title %} - {% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "styles/main.css" %}"> <!--Para cargar css-->
@@ -22,13 +22,14 @@
 {% include '_componentes/header.html' %}
 
 
+
 <!--Content block for differents contents-->
 
 <main class="container">
 {% block content %}
 
     <!--esto debe ir en la vista donde va el botón filter, es decir, en la homepage-->
-        <!--{% include '_componentes/filter.html' %} -->
+        <!--% include '_componentes/filter.html' % -->
 
 {% endblock  %}
 </main>
