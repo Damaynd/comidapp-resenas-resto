@@ -1,90 +1,111 @@
-*{
-    margin: 0;
-
-}
-.header{
-    display:flex;
-    justify-content: space-between;
-    height:45px;
-    background-color: seagreen;
-    padding: 10px;
-    overflow: hidden;
-}
-
-.header nav{
-    margin-right: 5%;
+/* Header verde coherente con la paleta */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  background: var(--brand);
+  padding: 0 1.5rem;
+  color: #fff;
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid color-mix(in oklab, var(--brand) 70%, black);
 }
 
-.header a{
-    float: left;
-    font-size: 13px;
-    color: honeydew;
-    text-align: right;
-    text-decoration: none;/*Quita la barrita fea de cuando se clickea*/
+.header .logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: .3px;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .2s;
 }
+.header .logo:hover { opacity: .9; }
 
-.header a:hover { /*Cuando se pasa el mouse por encima*/
-    color: mediumseagreen;
-}
+.menu { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
 
-.logo{
-    float:left;
-    line-height: 70px;
-}
-
-/* el contenedor de la cuenta */
-.dropdown {
-  overflow: hidden;
-  float: left;
-  margin-top: 2.6%;
-}
-
-/* el botón del contenedor */
-.dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
+/* Buscador */
+.search-form input[type="text"] {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .4rem .6rem;
+  color: var(--fg);
+  font-size: .9rem;
+  width: 180px;
   outline: none;
-  color: honeydew;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
+  transition: border .2s, box-shadow .2s;
 }
-/* el contenido del contenedor*/
+.search-form input[type="text"]:focus {
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 40%, transparent);
+}
+
+/* Enlaces del header */
+.header a {
+  font-size: .95rem;
+  color: #fff;
+  text-decoration: none;
+  padding: .4rem .75rem;
+  border-radius: 8px;
+  transition: background .2s;
+}
+.header a:hover {
+  background: color-mix(in oklab, var(--brand-700) 80%, white);
+  color: #fff;
+}
+
+/* Dropdown */
+.dropdown { position: relative; }
+.dropbtn {
+  background: transparent;
+  border: 1px solid color-mix(in oklab, var(--brand-800) 70%, white);
+  color: #fff;
+  font-size: .95rem;
+  cursor: pointer;
+  padding: .45rem .8rem;
+  border-radius: 8px;
+  transition: background .2s, border-color .2s;
+}
+.dropbtn:hover {
+  background: color-mix(in oklab, var(--brand-700) 70%, white);
+  border-color: color-mix(in oklab, var(--brand) 40%, white);
+}
+
+/* Puente invisible que evita que se “corte” el hover al bajar el mouse */
+.dropdown-content::before {
+  content: "";
+  position: absolute;
+  top: -8px;           /* cubre el espacio entre botón y menú */
+  left: 0;
+  right: 0;
+  height: 8px;
+  /* invisible, pero capta el hover */
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: lightgoldenrodyellow;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  z-index: 1000;
 }
-
-/* links adentro del contenedor */
 .dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
+  display: block;
+  padding: .6rem .8rem;
+  color: var(--fg);
   text-decoration: none;
-  display: block;
-  text-align: left;
+  border-bottom: 1px solid var(--border-soft);
 }
-
 .dropdown-content a:hover {
-  background-color: darkseagreen;
-  color: honeydew;
+  background: color-mix(in oklab, var(--brand) 20%, var(--panel));
 }
+.dropdown:hover .dropdown-content { display: block; }
 
-/* mostrar los contenidos al pasar por encima*/
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.header input[type=text] {
-  float: left;
-  padding: 6px;
-  border: none;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 17px;
-}
+/* Limpia floats antiguos por si quedan */
+.header a, .logo, .dropdown { float: none !important; }

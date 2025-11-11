@@ -1,0 +1,23 @@
+<header class="header">
+  <!-- Logo -->
+  <a href="/" class="logo">ComidApp</a>
+
+  <!-- Navegación / Buscador / Cuenta -->
+  <nav class="menu">
+    <!-- Buscador -->
+    <form action="{% url 'buscar' %}" method="get" class="search-form">
+      <input type="text" name="q" placeholder="Buscar...">
+    </form>
+
+    <!-- Menú desplegable de cuenta -->
+    <div class="dropdown">
+      <button class="dropbtn">Mi Cuenta ▾</button>
+      <div class="dropdown-content">
+        <a href="{% url 'perfil' %}">Perfil</a>
+        <a href="{% url 'favoritos' %}">Favoritos</a>
+        <a href="{% url 'resenas' %}">Reseñas</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
