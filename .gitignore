@@ -1,2 +1,31 @@
-# Ignorar el entorno virtual de Python
+# Archivos de compilación:
+__pycache__/
+*.py[cod]
+*$py.class
+
+# de Django:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+/staticfiles/
+media/
+
+# Environment:
+.env
 venv/
+ENV/
+env/
+.venv/
+
+# Solo por precaución:
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
