@@ -1,57 +1,65 @@
 {% extends "base.html" %}
 {% load static %}
 {% block contenido %}
-<head>
-    <meta charset="UTF-8">
-    <title>Página de Inicio</title>
-</head>
-<body>
-    <div>
-        <h2>Lista de Restaurantes</h2>
-        <ul>
-            <div class="all-restaurant-container">
-                {% for restaurante in restaurantes %}
-                    <div class="single-restaurant-container">
-                        <li>
-                            <div class="restaurant-name-address-rating">
-                                <div class="restaurant-name-rating">
-                                    <div class="restaurant-name">
-                                        <a href="{% url 'detalle_restaurante' restaurante.id %}">
+<div>
+    <h2>Lista de Restaurantes</h2>
+    <ul>
+        <div class="all-restaurant-container">
+            {% for restaurante in restaurantes %}
+                <div class = "single-restaurant-container">
+                    <li>
+                        <div class = "restaurant-name-address-rating">
+                            <div class = "restaurant-name-rating">
+                                <div class = "restaurant-name">
+                                    <a href = "{% url 'detalle_restaurante' restaurante.id %}">
                                         {{ restaurante.name }}
-                                        </a>
-                                    </div>
-                                    <div class="restaurant-rating">
-                                        <p>Rating: {{restaurante.avg_rating}}</p>
-                                    </div>
-                                    <div class="restaurant-fav">
-                                        <p>si</p>
-                                    </div>
+                                    </a>
                                 </div>
-                                <div class="restaurant-address">
-                                    <p>{{ restaurante.address }}</p>
+                                <div class = "restaurant-rating">
+                                    <p>Rating: {{ restaurante.avg_rating }}</p>
+                                </div>
+                                <div class = "restaurant-fav">
+                                    <p>si</p>
                                 </div>
                             </div>
-                            <div class="restaurant-image">
+                            <div class = "restaurant-address">
+                                <p>{{ restaurante.address }}</p>
                             </div>
-                            <div class="restaurant-description-price">
-                                <div class="restaurant-description">
-                                    <p>Restaurant familiar</p>
-                                </div>
-                                <div class="restaurant-price">
-                                    <p> Rango de precio: {{restaurante.price}}</p>
-                                </div>
+                        </div>
+                        <div class = "restaurant-image">
+                            {% if restaurante.cover_photos %}
+                                <img style="width:320px;height:200px;object-fit:cover;border-radius:8px"
+                                src="/media/{{ restaurante.cover_photos.0.path|cut:'data/' }}"
+                                alt="Foto de {{ restaurante.name }}" loading="lazy">
+                            {% else %}
+                                {% with any=restaurante.photo_set.all.0 %}
+                                    {% if any %}
+                                        <img src = " /media/{{ any.path|cut:'data/' }}" alt="Foto de {{ restaurante.name }}" loading = "lazy">
+                                    {% else %}
+                                        <img style = "width: 320px; height: 200px; object-fit: cover; border-radius: 8px"
+                                        src = "{% static 'img/placeholder-restaurant.png' %}"
+                                        alt = "Sin foto">
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        </div>
+                        <div class = "restaurant-description-price">
+                            <div class = "restaurant-description">
+                                <p>Restaurant familiar</p>
                             </div>
-                            <div class="restaurant-tags">
-                                <p>{{restaurant.tag}}</p>
+                            <div class = "restaurant-price">
+                                <p>Rango de precio: {{ restaurante.price }}</p>
                             </div>
-                        </li>
-                    </div>
-                {% empty %}
-                    <li>No hay restaurantes disponibles.</li>
-                {% endfor %}
-            </div>
-        </ul>
-    </div>
-</body>
-</html>
-{% endblock  %}
+                        </div>
+                        <div class = "restaurant-tags">
+                            <p>{{ restaurante.tag }}</p>
+                        </div>
+                    </li>
+                </div>
+            {% empty %}
+                <li>No hay restaurantes disponibles.</li>
+            {% endfor %}
+        </div>
+    </ul>
+</div>
+{% endblock %}
