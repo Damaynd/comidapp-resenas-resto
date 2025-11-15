@@ -15,14 +15,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='AccessibilityFeature',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.SlugField(max_length=100, unique=True)),
-                ('name', models.CharField(max_length=100, unique=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Cuisine',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -30,11 +22,22 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='DietaryTag',
+            name='DishType',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('code', models.SlugField(max_length=100, unique=True)),
                 ('name', models.CharField(max_length=100, unique=True)),
+                ('category', models.CharField(blank=True, max_length=50)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Tag',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('code', models.SlugField(max_length=100, unique=True)),
+                ('name', models.CharField(max_length=100, unique=True)),
+                ('scope', models.CharField(choices=[('restaurant', 'restaurant'), ('dish', 'dish'), ('both', 'both')], default='both', max_length=20)),
+                ('group', models.CharField(blank=True, max_length=50)),
             ],
         ),
         migrations.CreateModel(
@@ -44,25 +47,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True)),
                 ('price_ref', models.IntegerField(default=0)),
+                ('dish_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='restaurant_dishes', to='aplicacion.dishtype')),
             ],
-        ),
-        migrations.CreateModel(
-            name='DishDietary',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('evidence', models.CharField(choices=[('owner', 'owner'), ('label', 'label'), ('user_report', 'user_report')], default='user_report', max_length=20)),
-                ('cross_contamination', models.BooleanField(default=True)),
-                ('dish', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.dish')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.dietarytag')),
-            ],
-            options={
-                'unique_together': {('dish', 'tag')},
-            },
-        ),
-        migrations.AddField(
-            model_name='dish',
-            name='tags',
-            field=models.ManyToManyField(blank=True, through='aplicacion.DishDietary', to='aplicacion.dietarytag'),
         ),
         migrations.CreateModel(
             name='Restaurant',
@@ -85,12 +71,13 @@ class Migration(migrations.Migration):
             name='Photo',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.CharField(choices=[('kitchen', 'kitchen'), ('bathroom', 'bathroom'), ('tables', 'tables'), ('entrance', 'entrance'), ('menu', 'menu'), ('dish', 'dish')], max_length=20)),
+                ('category', models.CharField(choices=[('kitchen', 'kitchen'), ('bathroom', 'bathroom'), ('tables', 'tables'), ('entrance', 'entrance'), ('menu', 'menu'), ('dish', 'dish'), ('other', 'other')], max_length=20)),
+                ('category_label', models.CharField(blank=True, max_length=50)),
                 ('path', models.CharField(max_length=300)),
                 ('taken_at', models.DateField(blank=True, null=True)),
                 ('is_approved', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('dish', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='photos', to='aplicacion.dish')),
+                ('dish', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='photos', to='aplicacion.dish')),
                 ('uploaded_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='photos', to='aplicacion.restaurant')),
             ],
@@ -101,22 +88,49 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dishes', to='aplicacion.restaurant'),
         ),
         migrations.CreateModel(
-            name='RestaurantAccessibilityReport',
+            name='RestaurantTag',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('source_type', models.CharField(choices=[('owner', 'owner'), ('user', 'user')], max_length=20)),
-                ('status', models.CharField(choices=[('pending', 'pending'), ('accepted', 'accepted'), ('rejected', 'rejected')], default='pending', max_length=20)),
-                ('notes', models.TextField(blank=True, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('feature', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.accessibilityfeature')),
-                ('photo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='aplicacion.photo')),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='access_reports', to='aplicacion.restaurant')),
+                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.restaurant')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.tag')),
             ],
+            options={
+                'unique_together': {('restaurant', 'tag')},
+            },
         ),
-        migrations.AlterUniqueTogether(
-            name='dish',
-            unique_together={('restaurant', 'name')},
+        migrations.AddField(
+            model_name='restaurant',
+            name='tags',
+            field=models.ManyToManyField(blank=True, through='aplicacion.RestaurantTag', to='aplicacion.tag'),
+        ),
+        migrations.CreateModel(
+            name='DishTag',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('cross_contamination', models.BooleanField(default=True)),
+                ('dish', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.dish')),
+                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='aplicacion.tag')),
+            ],
+            options={
+                'unique_together': {('dish', 'tag')},
+            },
+        ),
+        migrations.AddField(
+            model_name='dish',
+            name='tags',
+            field=models.ManyToManyField(blank=True, through='aplicacion.DishTag', to='aplicacion.tag'),
+        ),
+        migrations.CreateModel(
+            name='DishTypeAlias',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('code', models.SlugField(max_length=100)),
+                ('name', models.CharField(max_length=100)),
+                ('dish_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='aliases', to='aplicacion.dishtype')),
+            ],
+            options={
+                'unique_together': {('dish_type', 'code')},
+            },
         ),
         migrations.CreateModel(
             name='Review',
@@ -132,5 +146,9 @@ class Migration(migrations.Migration):
             options={
                 'indexes': [models.Index(fields=['dish', 'created_at'], name='aplicacion__dish_id_e50353_idx'), models.Index(fields=['user', 'created_at'], name='aplicacion__user_id_97a10e_idx')],
             },
+        ),
+        migrations.AlterUniqueTogether(
+            name='dish',
+            unique_together={('restaurant', 'name')},
         ),
     ]

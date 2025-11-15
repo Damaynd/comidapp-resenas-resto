@@ -1,11 +1,19 @@
 from django.shortcuts import render
 from .models import *
+from django.db.models import Prefetch
+from aplicacion.models import Restaurant, Photo
+
 
 
 # Create your views here.
+# views.py
+
 def home(request):
-    lista_restaurantes = Restaurant.objects.all() 
-    return render(request, "home.html", {"restaurantes": lista_restaurantes})
+    restaurantes = (
+        Restaurant.objects
+        .prefetch_related(
+            Prefetch('photos', queryset = Photo.objects.filter(category = 'other').order_by('id'), to_attr = 'cover_photos')))
+    return render(request, 'home.html', {'restaurantes': restaurantes})
 
 # Cuando haces click en un restaurante de home.html, esta funcion te llevara a detalle_restaurante.html para ver mas detalles
 def detalle_restaurante(request, restaurante_id):
