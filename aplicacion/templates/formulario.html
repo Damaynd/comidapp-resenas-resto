@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}Formulario de Reseña{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'styles/formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h2>Sube tu opinión</h2>
+<form method="POST" enctype="multipart/form-data" class="mi-formulario">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.restaurant.id_for_label }}">{{ form.restaurant.label }}</label>
+        {{ form.restaurant }}
+        {{ form.restaurant.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.rating.id_for_label}}">{{ form.rating.label }}</label>
+        {{ form.rating }}
+        {{ form.rating.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.comment.id_for_label}}">{{ form.comment.label }}</label>
+        {{ form.comment }}
+        {{ form.comment.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.tags.id_for_label}}">{{ form.tags.label }}</label>
+        {{ form.tags }}
+        {{ form.tags.errors }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.photo.id_for_label}}">{{ form.photo.label }}</label>
+        {{ form.photo }}
+        {{ form.photo.errors }}
+    </div>
+    
+
+    <button type="submit">Enviar Opinión</button>
+</form>
+
+{% endblock %}

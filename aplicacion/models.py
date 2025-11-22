@@ -163,7 +163,13 @@ class Photo(models.Model):
     category = models.CharField(max_length = 20, choices = Category.choices)
     # Subtipo libre para 'other' (p. ej., "bar", "fachada", "bebidas")
     category_label = models.CharField(max_length = 50, blank = True)
-    path = models.CharField(max_length = 300)
+    
+    # Corrección hecha en feature/form
+    # path = models.CharField(max_length = 300)
+    image = models.ImageField(
+        upload_to='photos/',
+        max_length=300
+    )
     taken_at = models.DateField(null = True, blank = True)
     is_approved = models.BooleanField(default = False)
     created_at = models.DateTimeField(auto_now_add = True)
@@ -178,7 +184,7 @@ class Photo(models.Model):
     def __str__(self) -> str:
         return f"Photo({self.restaurant.name}, cat = {self.category})"
 
-
+# En realidad, DishReview: Evaluar su uso
 class Review(models.Model):
     dish = models.ForeignKey(Dish, on_delete = models.CASCADE, related_name = "reviews")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
@@ -195,3 +201,26 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f"Review({self.user_id} → {self.dish_id}, rating = {self.rating})"
+
+
+# Para feature/forms
+class RestaurantReview(models.Model):
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.CASCADE, related_name="reviews"
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete = models.CASCADE
+    )
+    rating = models.FloatField()
+    comment = models.TextField(max_length = 500)
+    created_at = models.DateTimeField(auto_now_add = True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["restaurant", "created_at"]),
+            models.Index(fields=["user", "created_at"]),
+        ]
+    
+    def __str__(self):
+        return f"Review({self.user.username} → {self.restaurant.name}, rating={self.rating})"
