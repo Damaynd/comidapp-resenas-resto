@@ -28,16 +28,9 @@ class RestaurantReviewForm(forms.ModelForm):
     class Meta:
         model = RestaurantReview
         # Campos del modelo que el usuario debe llenar
-        fields = ['restaurant', 'rating', 'comment']
+        fields = ['rating', 'comment']
 
         widgets = {
-            'restaurant': forms.Select(
-                attrs={
-                    'class':'restaurant',
-                    'placeholder':'Selecciona un restaurante',
-                    'rows': 4
-                }
-            ),
             'rating':forms.NumberInput(
                 attrs={
                     'class':'rating',
@@ -55,7 +48,6 @@ class RestaurantReviewForm(forms.ModelForm):
         }
 
         labels = {
-            'restaurant': 'Elige el restaurante',
             'rating':'Evalúa el lugar (1-7)',
             'comment':'Deja tu comentario',
         }
