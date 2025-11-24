@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class = "cover">
-        {% with cover = restaurante.photos.all.0 %}
+        {% with cover=restaurante.photos.all.0 %}
             {% if cover %}
                 <img class = "restaurant-cover" src = "/media/{{ cover.path|cut:'data/' }}" alt = "Foto de {{ restaurante.name }}" loading = "lazy">
             {% else %}
