@@ -28,7 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Como debe empezar la dirección de un archivo en el URL
 MEDIA_URL = "/media/"
+# Donde guardar archivos subidos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'data')
 
 

@@ -187,51 +187,50 @@ class Photo(models.Model):
     def __str__(self) -> str:
         return f"Photo({self.restaurant.name}, cat = {self.category})"
 
-# En realidad, DishReview: Evaluar su uso
-class Review(models.Model):
-    dish = models.ForeignKey(Dish, on_delete = models.CASCADE, related_name = "reviews")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    rating = models.FloatField()
-    comment = models.TextField(max_length = 500)
-    price_paid = models.IntegerField(default = 0)
-    created_at = models.DateTimeField(auto_now_add = True)
+# Aquí estaba DishReview
 
-    class Meta:
-        indexes = [
-            models.Index(fields = ["dish", "created_at"]),
-            models.Index(fields = ["user", "created_at"]),
-        ]
-
-    def __str__(self) -> str:
-        return f"Review({self.user_id} → {self.dish_id}, rating = {self.rating})"
-
-
-# Para feature/forms
+# clase RestaurantReview
 class RestaurantReview(models.Model):
+    # ------
+    # CAMPOS
+    # ------
+
+    # Restaurante
     restaurant = models.ForeignKey(
         Restaurant, on_delete=models.CASCADE, related_name="reviews"
     )
 
+    # Usuario
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete = models.CASCADE
     )
+
+    # Rating
     rating = models.FloatField(
         validators=[MinValueValidator(1.0), MaxValueValidator(7.0)]
     )
+
+    # Comentario
     comment = models.TextField(max_length = 500)
 
-    # Para enlazar reseña y foto
+    # Foto: Para enlazarla a la reseña
     photo = models.ImageField(upload_to='review_photos/', blank=True, null=True)
-    # Para enlazar reseña y tag
+
+    # Tags: Para enlazarlos a la reseñá
     tags = models.ManyToManyField(Tag, blank=True)
 
+    # Fecha de creación
     created_at = models.DateTimeField(auto_now_add = True)
 
     class Meta:
+        # Indices para optimizar consultas
         indexes = [
+            # Para ordenar restaurante por fecha
             models.Index(fields=["restaurant", "created_at"]),
+            # Para ordenar usuarios por fecha
             models.Index(fields=["user", "created_at"]),
         ]
     
+    # Para imprimir en consola: Depurar
     def __str__(self):
         return f"Review({self.user.username} → {self.restaurant.name}, rating={self.rating})"

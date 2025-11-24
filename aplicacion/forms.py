@@ -1,6 +1,9 @@
 from django import forms
 from .models import RestaurantReview, Tag
 
+# class RestaurantReviewForm()
+#   - Para instanciar el formulario que permite agregar reseña
+#   - Hereda de forms.ModelForm: Lo que permite crear un formulario basado en él
 class RestaurantReviewForm(forms.ModelForm):
 
     # Campo para seleccionar tags
@@ -12,23 +15,28 @@ class RestaurantReviewForm(forms.ModelForm):
             }
         ),
         required=False,
-        label="Añade etiquetas al restaurante"
+        label='Etiquetas (Opcional)'
     )
 
+    # Clase para configurar el ModelForm
     class Meta:
+
+        # Vincular el formulario a la tabla de la BD
         model = RestaurantReview
+
         # Campos del modelo que el usuario debe llenar
         fields = ['rating', 'comment', 'photo', 'tags']
 
+        # Para personalizar el HTML que Django generará para cada campo
         widgets = {
             'rating':forms.NumberInput(
                 attrs={
                     'class':'rating',
-                    'min':'1',
+                    'min':'1', # Validación HTML
                     'max':'7',
                     'step': '0.1',
                     'placeholder': '1.0 - 7.0',
-                    'oninput': "if(this.value>7) this.value=7; if(this.value<0) this.value=1;"
+                    'oninput': "if(this.value>7) this.value=7; if(this.value<0) this.value=1;" # Validación JS
                 }
             ),
             'comment':forms.Textarea(
@@ -45,17 +53,9 @@ class RestaurantReviewForm(forms.ModelForm):
             )
         }
 
+        # Para definir labels
         labels = {
             'rating':'Evalúa el lugar (1-7)',
             'comment':'Deja tu comentario',
-            'tags': 'Etiquetas (Opcional)',
             'photo': 'Sube una foto (Opcional)'
         }
-    
-    def clean_rating(self):
-        rating = self.cleaned_data.get('rating')
-        if rating < 1:
-            raise forms.ValidationError("La calificación mínima es 1.")
-        if rating > 7:
-            raise forms.ValidationError("La calificación máxima es 7.")
-        return rating

@@ -218,6 +218,7 @@ body { color: var(--fg); }
   padding: 12px;
 }
 
+/* BLOQUE DE CAMBIOS HECHOS EN FEATURE-FORMS */
 .card header {
   display: flex;
   justify-content: space-between;
@@ -234,7 +235,7 @@ body { color: var(--fg); }
 }
 
 .badge {
-    background: var(--brand);       /* Usamos tu variable verde */
+    background: var(--brand);       /* Usamos variable verde */
     color: #ffffff;
     border: 1px solid var(--brand);
     border-radius: 999px;
@@ -246,6 +247,8 @@ body { color: var(--fg); }
     white-space: nowrap;  /* Obliga a que "$ 10000" esté siempre en una línea */
     flex-shrink: 0;       /* Impide que el círculo se aplaste si falta espacio */
 }
+
+/* Modificado - Ver si borrar */
 /* .badge {
   background: #0c7a33; /* color detrás del precio (más brillante) *//*
   border: 1px solid var(--border);
@@ -292,6 +295,8 @@ body { color: var(--fg); }
     color: var(--muted);            /* Texto gris */
 }
 
+/* Modificar: Ver si borrar */
+
 /* .tags {
   display: flex;
   gap: 8px; /* más separación para lectura *//*
@@ -315,6 +320,9 @@ body { color: var(--fg); }
 
 /*mensaje de "Sin etiqueta"*/
 /*.tag--empty { opacity: .6; } */
+
+/* FIN DE BLOQUE MODIFICADO EN FEATURE-FORMS */
+
 
 .access-list {
   list-style: none;

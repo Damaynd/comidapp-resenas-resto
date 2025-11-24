@@ -8,6 +8,8 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('favoritos/', views.favoritos, name='favoritos'),
     path('resenas/', views.resenas, name='resenas'),
-    # path('formulario/', views.add_restaurant_review, name='formulario'),
+    # Path con párametro dinámico que reacciona a cada restaurante
+    # Carga la de views.py la vista crear_resena
+    # name: para usar la ruta en HTML, con apodo abreviado
     path('restaurante/<int:restaurante_id>/crear_resena', views.crear_resena, name='crear_resena')
 ]
