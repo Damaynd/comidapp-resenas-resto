@@ -8,11 +8,14 @@
             <li class="single-restaurant-container">
                 <div class="restaurant-image">
                     {% if restaurante.cover_photos %}
-                        <img class="restaurant-photo" src="/media/{{ restaurante.cover_photos.0.path|cut:'data/' }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+                    <!--path to image in feature-forms-->
+                    <!--src="/media/{{ restaurante.cover_photos.0.path|cut:'data/' }}  to :"-->
+                        <img class="restaurant-photo" src="{{ restaurante.cover_photos.0.image.url }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
                     {% else %}
                         {% with any=restaurante.photo_set.all.0 %}
                             {% if any %}
-                                <img class="restaurant-photo" src="/media/{{ any.path|cut:'data/' }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+                            <!--src="/media/{{ any.path|cut:'data/' }}" to: -->
+                                <img class="restaurant-photo" src="{{ any.image.url }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
                             {% else %}
                                 <img class="restaurant-photo" src="{% static 'img/placeholder-restaurant.png' %}" alt="Sin foto">
                             {% endif %}

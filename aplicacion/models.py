@@ -168,7 +168,7 @@ class Photo(models.Model):
     # path = models.CharField(max_length = 300)
     image = models.ImageField(
         upload_to='photos/',
-        max_length=300
+        max_length=301
     )
     taken_at = models.DateField(null = True, blank = True)
     is_approved = models.BooleanField(default = False)
