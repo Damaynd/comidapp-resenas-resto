@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load pathquote %}
 
 {% block filtro %}
   {% include "_componentes/buscar_panel.html" %}
@@ -14,18 +15,18 @@
         <div class="restaurant-image">
           {% if restaurante.cover_photos %}
             {% with photo=restaurante.cover_photos.0 %}
-              <img class="restaurant-photo"
-                   src="/media/{{ photo.path|cut:'data/' }}"
-                   alt="Foto de {{ restaurante.name }}"
-                   loading="lazy">
+                  <img class="restaurant-photo"
+                    src="/media/{{ photo.path|cut:'data/'|pathquote }}"
+                    alt="Foto de {{ restaurante.name }}"
+                    loading="lazy">
             {% endwith %}
           {% else %}
             {% with any=restaurante.photos.all.0 %}
               {% if any %}
-                <img class="restaurant-photo"
-                     src="/media/{{ any.path|cut:'data/' }}"
-                     alt="Foto de {{ restaurante.name }}"
-                     loading="lazy">
+                 <img class="restaurant-photo"
+                   src="/media/{{ any.path|cut:'data/'|pathquote }}"
+                   alt="Foto de {{ restaurante.name }}"
+                   loading="lazy">
               {% else %}
                 <img class="restaurant-photo"
                      src="{% static 'img/placeholder-restaurant.png' %}"
