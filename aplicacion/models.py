@@ -146,9 +146,7 @@ class DishTag(models.Model):
         return f"{self.dish.name} ⟷ {self.tag.code} (cross_contamination = {self.cross_contamination})"
 
 
-# =========================
 # Contenido generado por usuarios
-# =========================
 class Photo(models.Model):
     class Category(models.TextChoices):
         KITCHEN = "kitchen", "kitchen"

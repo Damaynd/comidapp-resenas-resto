@@ -1,88 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block filtro %}
+  {% include "_componentes/buscar_panel.html" %}
+{% endblock %}
+
 {% block contenido %}
 <div>
-  <h1>Buscar</h1>
-
-  <form action = "{% url 'buscar' %}" method = "get" style = "margin: 12px 0;">
-    <input
-      type = "text"
-      name = "q"
-      value = "{{ q }}"
-      placeholder = "Busca restaurantes o platos"
-      style = "width: 70%; padding: 8px;"
-    >
-    <button type = "submit">Buscar</button>
-  </form>
-
-  {% if q %}
+  {% if q or rating_min or price_max or tag %}
+    <h1>Resultados</h1>
     <p>
-      Resultados para <strong>{{ q }}</strong>
-      – Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}
+      {% if q %}Para <strong>{{ q }}</strong> – {% endif %}
+      Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}
     </p>
 
     {% if restaurant_groups %}
-      <ul class = "all-restaurant-container">
+      <ul class="all-restaurant-container">
         {% for group in restaurant_groups %}
           {% with restaurante=group.restaurant platos=group.dishes %}
-            <li class = "single-restaurant-container">
+            <li class="single-restaurant-container">
 
-              <div class = "restaurant-image">
+              <div class="restaurant-image">
                 {% if restaurante.cover_photos %}
                   {% with photo=restaurante.cover_photos.0 %}
-                    <img class = "restaurant-photo"
-                         src = "/media/{{ photo.path|cut:'data/' }}"
-                         alt = "Foto de {{ restaurante.name }}"
-                         loading = "lazy">
+                    <img class="restaurant-photo"
+                         src="/media/{{ photo.path|cut:'data/' }}"
+                         alt="Foto de {{ restaurante.name }}"
+                         loading="lazy">
                   {% endwith %}
                 {% else %}
                   {% with any=restaurante.photos.all.0 %}
                     {% if any %}
-                      <img class = "restaurant-photo"
-                           src = "/media/{{ any.path|cut:'data/' }}"
-                           alt = "Foto de {{ restaurante.name }}"
-                           loading = "lazy">
+                      <img class="restaurant-photo"
+                           src="/media/{{ any.path|cut:'data/' }}"
+                           alt="Foto de {{ restaurante.name }}"
+                           loading="lazy">
                     {% else %}
-                      <img class = "restaurant-photo"
-                           src = "{% static 'img/placeholder-restaurant.png' %}"
-                           alt = "Sin foto"
-                           loading = "lazy">
+                      <img class="restaurant-photo"
+                           src="{% static 'img/placeholder-restaurant.png' %}"
+                           alt="Sin foto"
+                           loading="lazy">
                     {% endif %}
                   {% endwith %}
                 {% endif %}
               </div>
 
-              <div class = "restaurant-name-address-rating">
-                <div class = "restaurant-name-rating">
-                  <div class = "restaurant-name">
-                    <a href = "{% url 'detalle_restaurante' restaurante.id %}">
+              <div class="restaurant-name-address-rating">
+                <div class="restaurant-name-rating">
+                  <div class="restaurant-name">
+                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
                       {{ restaurante.name }}
                     </a>
                   </div>
-                  <div class = "restaurant-rating">
+                  <div class="restaurant-rating">
                     <p>Rating: {{ restaurante.avg_rating }}</p>
                   </div>
                 </div>
-                <div class = "restaurant-address">
+                <div class="restaurant-address">
                   <p>{{ restaurante.address }}</p>
                 </div>
               </div>
 
-              <div class = "restaurant-description-price">
-                <div class = "restaurant-description">
+              <div class="restaurant-description-price">
+                <div class="restaurant-description">
                   <p>Restaurant familiar</p>
                 </div>
-                <div class = "restaurant-price">
-                  <p> Rango de precio: {{ restaurante.price }} </p>
+                <div class="restaurant-price">
+                  <p>Rango de precio: {{ restaurante.price }}</p>
                 </div>
               </div>
 
               {% with tags=restaurante.tags.all %}
                 {% if tags %}
-                  <div class = "restaurant-tags">
+                  <div class="restaurant-tags">
                     <p>
-                      <strong> Tags del restaurante: </strong>
+                      <strong>Tags del restaurante:</strong>
                       {% for t in tags %}
                         {{ t.code }}{% if not forloop.last %}, {% endif %}
                       {% endfor %}
@@ -92,15 +84,16 @@
               {% endwith %}
 
               {% if platos %}
-                <div class = "search-dishes">
-                  <p><strong> Platos que coinciden con la búsqueda: </strong></p>
-                  <ul class = "search-dish-list">
+                <div class="search-dishes">
+                  <p><strong>Platos que coinciden con la búsqueda:</strong></p>
+                  <ul class="search-dish-list">
                     {% for d in platos %}
                       <li>
                         {{ d.name }}
                         {% if d.dish_type %}
                           ({{ d.dish_type.name }})
                         {% endif %}
+
                         {% with dish_tags=d.tags.all %}
                           {% if dish_tags %}
                             – Tags:
@@ -120,8 +113,11 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p> No se encontraron restaurantes para esta búsqueda. </p>
+      <p>No se encontraron restaurantes para estos criterios.</p>
     {% endif %}
+  {% else %}
+    <h1>Buscar restaurantes y platos</h1>
+    <p>Usa el buscador superior para filtrar por texto, rating, precio y tags.</p>
   {% endif %}
 </div>
 {% endblock %}
