@@ -168,19 +168,37 @@
     </div>
 
     <div class="cards">
-        {% for review in restaurante.reviews.all %}
-            <article class="card review">
-                <header>
+    {% for review in restaurante.reviews.all %}
+        <article class="card review">
+            <header>
+                <div class="review-user">
                     <h3>{{ review.user.username }}</h3>
-                    <span class="stars">⭐ {{ review.rating }}</span>
-                </header>
-                <p>{{ review.comment }}</p>
-                <footer class="muted">{{ review.created_at|date:'Y-m-d H:i' }}</footer>
-            </article>
-        {% empty %}
-            <p class="no-reviews-msg">No hay reseñas para este restaurante aún.</p>
-        {% endfor %}
-    </div>
+                    <footer class="muted" style="font-size: 0.8rem;">{{ review.created_at|date:'d/m/Y' }}</footer>
+                </div>
+                <span class="stars">⭐ {{ review.rating }}</span>
+            </header>
+            
+            <p>{{ review.comment }}</p>
+            {% if review.tags.all %}
+                <div class="review-tags">
+                    {% for tag in review.tags.all %}
+                        <span class="mini-tag">{{ tag.name}} </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if review.photo %}
+                <div class="review-image-container">
+                    <a href="{{ review.photo.url }}" target="_blank">
+                        <img src="{{ review.photo.url }}" alt="Foto de reseña" loading="lazy">
+                    </a>
+                </div>
+            {% endif %}
+            
+        </article>
+    {% empty %}
+        <p class="no-reviews-msg">No hay reseñas para este restaurante aún.</p>
+    {% endfor %}
+</div>
 </section>
 
 <div id="reviewModal" class="modal-overlay">

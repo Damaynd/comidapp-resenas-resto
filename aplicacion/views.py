@@ -68,18 +68,20 @@ def crear_resena(request, restaurante_id):
 
             # Guardar Tags
             selected_tags = form.cleaned_data.get('tags')
+
+            review.tags.set(selected_tags)
+            
             for tag in selected_tags:
                 restaurante.tags.add(tag)
             
-            # Guardar Foto si existe
-            uploaded_file = form.cleaned_data.get('photo')
-            if uploaded_file:
+            # Guardar Foto si existe: Para carrusel
+            if review.photo:
                 Photo.objects.create(
                     uploaded_by=request.user,
                     restaurant=restaurante,
                     category=Photo.Category.OTHER,
                     category_label="Review de Usuario",
-                    image = uploaded_file
+                    image = review.photo
                 )
 
             # Para el promedio

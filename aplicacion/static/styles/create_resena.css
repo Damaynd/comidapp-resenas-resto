@@ -158,3 +158,56 @@
     color: var(--muted);             /* Color grisáceo de tu tema */
     font-weight: normal;
 }
+
+
+/* Estilo para la imagen dentro de la reseña */
+.review-image-container {
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.review-image-container img {
+    width: 100%;
+    max-height: 200px; /* Limitamos la altura para que no ocupe toda la pantalla */
+    object-fit: cover; /* Recorta la imagen para llenar el espacio sin deformarse */
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.review-image-container img:hover {
+    cursor: zoom-in;
+    opacity: 0.9;
+}
+
+/* Pequeño ajuste al header de la tarjeta para que se vea mejor */
+.review-user {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+/* Contenedor de las etiquetas en la reseña */
+.review-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px; /* Espacio antes de la foto */
+}
+
+/* Estilo de cada etiquetita */
+.mini-tag {
+    font-size: 0.75rem;       /* Letra pequeñita */
+    background-color: var(--elev);
+    color: var(--brand);      /* Verde de tu marca */
+    border: 1px solid var(--brand); /* Borde fino verde */
+    padding: 2px 8px;
+    border-radius: 10px;      /* Bordes redondos */
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Ajuste para modo oscuro (automático si usas tus variables) */

@@ -18,7 +18,7 @@ class RestaurantReviewForm(forms.ModelForm):
     class Meta:
         model = RestaurantReview
         # Campos del modelo que el usuario debe llenar
-        fields = ['rating', 'comment', 'photo']
+        fields = ['rating', 'comment', 'photo', 'tags']
 
         widgets = {
             'rating':forms.NumberInput(

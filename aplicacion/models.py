@@ -217,7 +217,9 @@ class RestaurantReview(models.Model):
 
     # Para enlazar reseña y foto
     photo = models.ImageField(upload_to='review_photos/', blank=True, null=True)
-
+    # Para enlazar reseña y tag
+    tags = models.ManyToManyField(Tag, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add = True)
 
     class Meta:
