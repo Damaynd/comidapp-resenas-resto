@@ -3,6 +3,8 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'styles/detalle_restaurante.css' %}">
+
+<link rel="stylesheet" href="{% static 'styles/create_resena.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -141,10 +143,40 @@
         {% endfor %}
     </ul>
 </section>
-<div style="text-align: center; margin: 20px 0;">
-    <button onclick="openModal()" class="btn">Añadir Reseña</button>
-</div>
+
+
 <!--feature-forms-->
+<section class="restaurant-reviews">
+    <div class="section-header">
+    <h2>Reseñas del Restaurante</h2>
+    
+    {% if user.is_authenticated %}
+        <button onclick="openModal()" class="btn-primary">
+            + Añadir Reseña
+        </button>
+    {% else %}
+        <a href="/admin/login/?next={{ request.path }}" class="btn btn--secondary" style="font-size: 0.9rem;">
+            Inicia sesión para opinar
+        </a>
+    {% endif %}
+    </div>
+
+    <div class="cards">
+        {% for review in restaurante.reviews.all %}
+            <article class="card review">
+                <header>
+                    <h3>{{ review.user.username }}</h3>
+                    <span class="stars">⭐ {{ review.rating }}</span>
+                </header>
+                <p>{{ review.comment }}</p>
+                <footer class="muted">{{ review.created_at|date:'Y-m-d H:i' }}</footer>
+            </article>
+        {% empty %}
+            <p class="no-reviews-msg">No hay reseñas para este restaurante aún.</p>
+        {% endfor %}
+    </div>
+</section>
+
 <div id="reviewModal" class="modal-overlay">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -173,87 +205,12 @@
                 {{ form.photo }}
             </div>
 
-            <button type="submit" class="btn">Enviar Opinión</button>
+            <button type="submit" class="submit-btn">Enviar Opinión</button>
         </form>
     </div>
 </div>
 
-<style>
-    .modal-overlay {
-        display: none; /* Oculto por defecto */
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 500px;
-        position: relative;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-    .checkboxTags { list-style: none; padding: 0; }
-    .checkboxTags li { display: inline-block; margin-right: 10px; }
-</style>
-
-<script>
-    function openModal() {
-        document.getElementById('reviewModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('reviewModal').style.display = 'none';
-    }
-
-    // Cerrar si se hace click fuera del contenido
-    window.onclick = function(event) {
-        let modal = document.getElementById('reviewModal');
-        if (event.target == modal) {
-            closeModal();
-        }
-    }
-</script>
-<!--feature-forms: reseñas de platos a reseñas de restaurantes-->
-<section class="restaurant-reviews">
-    <h2>Reseñas del Restaurante</h2>
-    <div class="cards">
-        {% for review in restaurante.reviews.all %}
-            <article class="card review">
-                <header>
-                    <h3>{{ review.user.username }}</h3> <span class="stars">
-                        {{ review.rating }} ★
-                    </span>
-                </header>
-                <p>{{ review.comment }}</p>
-                <footer class="muted">{{ review.created_at|date:'Y-m-d H:i' }}</footer>
-            </article>
-        {% empty %}
-            <p>No hay reseñas aún.</p>
-        {% endfor %}
-    </div>
-</section>
+<script src="{% static 'js/create_resena.js' %}"></script>
 
 <p><a href="/">← Volver al listado</a></p>
 

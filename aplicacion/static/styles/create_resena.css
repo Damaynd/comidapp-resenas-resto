@@ -1,0 +1,133 @@
+/* static/styles/create_resena.css */
+
+/* IMPORTANTE: Este archivo asume que las variables (:root) 
+   ya están definidas en detalle_restaurante.css o main.css */
+
+/* --- BOTÓN DE ABRIR --- */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.section-header h2 { margin: 0; }
+
+.btn-primary {
+    background-color: var(--brand);
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover { background-color: var(--brand-700); }
+.btn-primary:active { transform: scale(0.98); }
+
+/* --- VENTANA MODAL --- */
+.modal-overlay {
+    display: none;       /* JavaScript lo cambia a flex */
+    position: fixed;     /* FLOTANTE */
+    z-index: 1000;       /* ENCIMA DE TODO */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--panel); 
+    color: var(--fg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+}
+.close-btn:hover { color: var(--danger, red); }
+
+.modal-content h2 {
+    color: var(--brand);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* --- FORMULARIO INTERNO --- */
+.form-group { margin-bottom: 1.25rem; }
+    
+.form-group label { 
+    display: block; 
+    margin-bottom: 0.5rem; 
+    font-weight: 600; 
+}
+
+.modal-content input[type="number"],
+.modal-content textarea,
+.modal-content input[type="text"] {
+    width: 100%;
+    background: var(--elev);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Tags / Checkboxes */
+.checkboxTags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.checkboxTags li {
+    display: flex;
+    align-items: center;
+    background: var(--elev);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: var(--brand);
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+.submit-btn:hover { background-color: var(--brand-700); }

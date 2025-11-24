@@ -3,11 +3,13 @@ from .models import *
 from django.db.models import Prefetch
 from aplicacion.models import Restaurant, Photo
 from .forms import RestaurantReviewForm
+from django.contrib.auth.decorators import login_required
 
 # Para feature/forms se necesitó:
 # from django.shortcuts import render, redirect
 # from .models import Photo
 # from .forms import RestaurantReviewForm
+# from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -46,6 +48,7 @@ def resenas(request):
     return render(request, 'resenas.html')
 
 # Para feature/forms
+@login_required
 def crear_resena(request, restaurante_id):
     restaurante = get_object_or_404(Restaurant, pk=restaurante_id)
 
