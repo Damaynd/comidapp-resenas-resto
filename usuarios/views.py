@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-from aplicacion.models import Review
+from aplicacion.models import RestaurantReview
 from .forms import RegistroUsuarioForm
 from django.contrib.auth.decorators import login_required
 from .forms import PerfilForm
@@ -11,7 +11,7 @@ from .forms import PerfilForm
 def perfil(request):
     user = request.user
     # Reseñas del usuario
-    reseñas = Review.objects.filter(user=user)
+    reseñas = RestaurantReview.objects.filter(user=user)
     favoritos = user.favoritos.all() 
     return render(request, 'usuarios/perfil.html', {
         'usuario': user,
@@ -58,7 +58,7 @@ def favoritos(request):
 @login_required
 def resenas(request):
     usuario = request.user
-    resenas_usuario = Review.objects.filter(user=usuario)
+    resenas_usuario = RestaurantReview.objects.filter(user=usuario)
 
     return render(request, 'usuarios/resenas.html', {
         "resenas": resenas_usuario
@@ -66,7 +66,7 @@ def resenas(request):
 
 @login_required
 def editar_resena(request, id):
-    resena = get_object_or_404(Review, id=id, user=request.user)
+    resena = get_object_or_404(RestaurantReview, id=id, user=request.user)
 
     if request.method == "POST":
         contenido = request.POST.get("contenido")
@@ -80,7 +80,7 @@ def editar_resena(request, id):
 
 @login_required
 def eliminar_resena(request, id):
-    resena = get_object_or_404(Review, id=id, user=request.user)
+    resena = get_object_or_404(RestaurantReview, id=id, user=request.user)
 
     if request.method == "POST":
         resena.delete()
