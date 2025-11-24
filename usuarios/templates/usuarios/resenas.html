@@ -17,14 +17,14 @@
         <div class="resena-header">
             <strong>
                 <a href="/restaurantes/{{ r.restaurant.id }}/">
-                    {{ r.restaurant.nombre }}
+                    {{ r.restaurant.name }}
                 </a>
             </strong>
 
-            <span class="fecha">{{ r.fecha|date:"d/m/Y" }}</span>
+            <span class="fecha">{{ r.created_at|date:"d/m/Y" }}</span>
         </div>
 
-        <p>{{ r.contenido }}</p>
+        <p>{{ r.comment }}</p>
 
         <div class="resena-acciones">
             <a class="btn-editar" href="{% url 'editar_resena' r.id %}">Editar</a>
