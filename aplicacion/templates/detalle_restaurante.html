@@ -141,27 +141,116 @@
         {% endfor %}
     </ul>
 </section>
+<div style="text-align: center; margin: 20px 0;">
+    <button onclick="openModal()" class="btn">Añadir Reseña</button>
+</div>
+<!--feature-forms-->
+<div id="reviewModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Tu opinión sobre {{ restaurante.name }}</h2>
+        
+        <form method="POST" action="{% url 'crear_resena' restaurante.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>{{ form.rating.label }}</label>
+                {{ form.rating }}
+            </div>
 
+            <div class="form-group">
+                <label>{{ form.comment.label }}</label>
+                {{ form.comment }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.tags.label }}</label>
+                {{ form.tags }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.photo.label }}</label>
+                {{ form.photo }}
+            </div>
+
+            <button type="submit" class="btn">Enviar Opinión</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal-overlay {
+        display: none; /* Oculto por defecto */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5); /* Fondo semitransparente */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .checkboxTags { list-style: none; padding: 0; }
+    .checkboxTags li { display: inline-block; margin-right: 10px; }
+</style>
+
+<script>
+    function openModal() {
+        document.getElementById('reviewModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('reviewModal').style.display = 'none';
+    }
+
+    // Cerrar si se hace click fuera del contenido
+    window.onclick = function(event) {
+        let modal = document.getElementById('reviewModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+<!--feature-forms: reseñas de platos a reseñas de restaurantes-->
 <section class="restaurant-reviews">
-    <h2>Reseñas recientes</h2>
+    <h2>Reseñas del Restaurante</h2>
     <div class="cards">
-        {% for dish in restaurante.dishes.all %}
-            {% for review in dish.reviews.all %}
-                <article class="card review">
-                    <header>
-                        <h3>{{ dish.name }}</h3>
-                        <span class="stars" aria-label="{{ review.rating }} estrellas">
-                            {% for _ in "12345"|slice:":" %}
-                                {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
-                            {% endfor %}
-                        </span>
-                    </header>
-                    <p>{{ review.comment }}</p>
-                    <footer class="muted">Precio pagado: $ {{ review.price_paid }} · {{ review.created_at|date:'Y-m-d H:i' }}</footer>
-                </article>
-            {% endfor %}
+        {% for review in restaurante.reviews.all %}
+            <article class="card review">
+                <header>
+                    <h3>{{ review.user.username }}</h3> <span class="stars">
+                        {{ review.rating }} ★
+                    </span>
+                </header>
+                <p>{{ review.comment }}</p>
+                <footer class="muted">{{ review.created_at|date:'Y-m-d H:i' }}</footer>
+            </article>
         {% empty %}
-            <p>No hay reseñas registradas.</p>
+            <p>No hay reseñas aún.</p>
         {% endfor %}
     </div>
 </section>
