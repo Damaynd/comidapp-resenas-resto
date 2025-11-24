@@ -66,3 +66,46 @@ input[type="text"], input[type="search"] {
 input::placeholder { color: var(--muted); }
 
 .container { width: min(1100px, 100% - 2rem); margin-inline: auto; padding-block: 1.25rem; }
+
+.all-restaurant-container{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1rem;
+}
+
+.single-restaurant-container{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:14px;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.single-restaurant-container:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,.15);
+}
+
+.restaurant-image{ margin-bottom:.6rem; }
+.restaurant-photo{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--elev);
+  display:block;
+}
+
+.restaurant-name{ font-weight:700; }
+.restaurant-rating,
+.restaurant-address,
+.restaurant-tags{ color:var(--muted); font-size:.95rem; }
+
+.restaurant-description-price{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:.75rem; margin-top:.5rem; font-size:.95rem;
+}
+
