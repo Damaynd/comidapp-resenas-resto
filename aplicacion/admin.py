@@ -44,7 +44,7 @@ class RestaurantAdmin(admin.ModelAdmin):
     list_display = ('name', 'avg_rating', 'review_count', 'price')
     search_fields = ('name', 'address')
     list_filter = ('price',)
-    filter_horizontal = ('cuisines', 'tags') # También útil aquí
+    filter_horizontal = ('cuisines', ) # También útil aquí
 
 
 # --- REGISTRO DE MODELOS ---
