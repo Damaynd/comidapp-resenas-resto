@@ -24,7 +24,6 @@ urlpatterns = [
     path("", include("aplicacion.urls")),
     path('', include('usuarios.urls')),
 ]
-# feature-forms: before changes: + static(...) 
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    

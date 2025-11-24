@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load pathquote %}
 
 {% block filtro %}
   {% include "_componentes/buscar_panel.html" %}
@@ -7,6 +8,36 @@
 
 {% block contenido %}
 <div>
+<<<<<<< HEAD
+  <h2>Lista de Restaurantes</h2>
+  <ul class="all-restaurant-container">
+    {% for restaurante in restaurantes %}
+      <li class="single-restaurant-container">
+        <div class="restaurant-image">
+          {% if restaurante.cover_photos %}
+            {% with photo=restaurante.cover_photos.0 %}
+                  <img class="restaurant-photo"
+                    src="/media/{{ photo.path|cut:'data/'|pathquote }}"
+                    alt="Foto de {{ restaurante.name }}"
+                    loading="lazy">
+            {% endwith %}
+          {% else %}
+            {% with any=restaurante.photos.all.0 %}
+              {% if any %}
+                 <img class="restaurant-photo"
+                   src="/media/{{ any.path|cut:'data/'|pathquote }}"
+                   alt="Foto de {{ restaurante.name }}"
+                   loading="lazy">
+              {% else %}
+                <img class="restaurant-photo"
+                     src="{% static 'img/placeholder-restaurant.png' %}"
+                     alt="Sin foto"
+                     loading="lazy">
+              {% endif %}
+            {% endwith %}
+          {% endif %}
+        </div>
+=======
     <h2>Lista de Restaurantes</h2>
     <ul class="all-restaurant-container">
         {% for restaurante in restaurantes %}
@@ -27,6 +58,7 @@
                         {% endwith %}
                     {% endif %}
                 </div>
+>>>>>>> origin/main
 
         <div class="restaurant-name-address-rating">
           <div class="restaurant-name-rating">

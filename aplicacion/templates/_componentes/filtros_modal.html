@@ -1,0 +1,129 @@
+<!-- Modal de filtros personalizado (sin Bootstrap) -->
+<section id="filtrosModal" class="modal-hidden" aria-hidden="true">
+  <div class="modal-backdrop" data-action="close"></div>
+  <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="filtrosTitle">
+    <form method="get" action="{% url 'buscar' %}">
+    <header class="modal-header">
+      <h3 id="filtrosTitle">Filtros</h3>
+      <button type="button" class="modal-close" data-action="close" aria-label="Cerrar">✕</button>
+    </header>
+
+    <div class="modal-body">
+      <section class="filtros">
+
+        <details>
+          <summary><span class="boton-subfiltro">⭐ Estrellas</span></summary>
+          <div class="sub-filtros">
+            <label><input type="radio" name="rating_min" value="5"> ★★★★★</label><br>
+            <label><input type="radio" name="rating_min" value="4"> ★★★★☆</label><br>
+            <label><input type="radio" name="rating_min" value="3"> ★★★☆☆</label><br>
+            <label><input type="radio" name="rating_min" value="2"> ★★☆☆☆</label><br>
+            <label><input type="radio" name="rating_min" value="1"> ★☆☆☆☆</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🌱 Opciones veganas</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="vegan"> Vegano</label><br>
+            <label><input type="checkbox" name="tag" value="vegetarian"> Vegetariano</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🚪 Accesibilidad</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="accesible"> Rampa / baños adaptados</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🍃 Espacios al aire libre</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="outdoor"> Terraza / mesas fuera</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🐕‍🦺 Mascotas</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="pet-friendly"> Acepta mascotas / espacios</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🍝 Tipo de comida</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="cuisine" value="italiana"> Italiana</label><br>
+            <label><input type="checkbox" name="cuisine" value="china"> China</label><br>
+            <label><input type="checkbox" name="cuisine" value="chilena"> Chilena</label><br>
+            <label><input type="checkbox" name="cuisine" value="mexicana"> Mexicana</label><br>
+            <label><input type="checkbox" name="cuisine" value="peruana"> Peruana</label><br>
+            <label><input type="checkbox" name="cuisine" value="pizzeria"> Pizzas</label><br>
+            <label><input type="checkbox" name="cuisine" value="japonesa"> Sushi</label><br>
+            <label><input type="checkbox" name="cuisine" value="gringa"> Hamburguesas</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">💲Precio promedio de comida completa</span></summary>
+          <div class="sub-filtros">
+            <label><input type="radio" name="price_max" value="1"> Menos de 10.000 pesos</label><br>
+            <label><input type="radio" name="price_max" value="2"> 10.000 - 20.000 pesos</label><br>
+            <label><input type="radio" name="price_max" value="3"> 20.000 - 30.000 pesos</label><br>
+            <label><input type="radio" name="price_max" value="4"> Más de 40.000 pesos</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">⏳ Tiempo de espera</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="fast-service"> 10–30 min</label><br>
+            <label><input type="checkbox" name="tag" value="slow-service"> 31 min – 1 hr</label><br>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🏷️ Ofertas y promociones</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="offers"> Descuentos / Ofertas</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">♻️ Ecológicos</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="eco"> Envases ecológicos / reciclaje</label><br>
+            <label><input type="checkbox" name="tag" value="sustentable"> Sustentable</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🍷 Patente de alcohol</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="patente-c"> Tipo C</label><br>
+            <label><input type="checkbox" name="tag" value="patente-d"> Tipo D</label><br>
+            <label><input type="checkbox" name="tag" value="patente-e"> Tipo E</label>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="boton-subfiltro">🕺 Actividades extra</span></summary>
+          <div class="sub-filtros">
+            <label><input type="checkbox" name="tag" value="musica-en-vivo"> Música en vivo</label><br>
+            <label><input type="checkbox" name="tag" value="musica-y-baile"> Música y baile</label><br>
+            <label><input type="checkbox" name="tag" value="show-interactivo"> Show interactivo</label><br>
+            <label><input type="checkbox" name="tag" value="karaoke"> Karaoke</label>
+          </div>
+        </details>
+
+      </section>
+    </div>
+
+    <footer class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-action="close">Cerrar</button>
+      <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+    </footer>
+    </form>
+  </div>
+</section>

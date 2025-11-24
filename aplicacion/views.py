@@ -45,7 +45,10 @@ def buscar(request):
     q = (request.GET.get("q") or "").strip()
     rating_min_raw = (request.GET.get("rating_min") or "").strip()
     price_max_raw = (request.GET.get("price_max") or "").strip()
+    # support multiple tag and cuisine selections
     tag_raw = (request.GET.get("tag") or "").strip()
+    tags_list = request.GET.getlist('tag')
+    cuisines_list = request.GET.getlist('cuisine')
 
     # helpers para el casteo
     def to_int(s):
@@ -57,12 +60,14 @@ def buscar(request):
     rating_min = to_int(rating_min_raw) if rating_min_raw else None
     price_max = to_int(price_max_raw) if price_max_raw else None
 
-    # si hay algún criterio seleccionado
+    # si hay algún criterio seleccionado (incluye listas de tags/cuisines)
     has_filters = any([
         q,
         rating_min is not None,
         price_max is not None,
         tag_raw,
+        bool(tags_list),
+        bool(cuisines_list),
     ])
 
     # si no hay filtros ni texto, solo mostramos el formulario sin los resultados
@@ -75,6 +80,8 @@ def buscar(request):
                 "rating_min": "",
                 "price_max": "",
                 "tag": "",
+                "tags": [],
+                "cuisines": [],
                 "restaurant_groups": [],
                 "counts": {"restaurants": 0, "dishes": 0},
             },
@@ -116,8 +123,15 @@ def buscar(request):
         restaurants_qs = restaurants_qs.filter(price__lte = price_max)
         dishes_qs = dishes_qs.filter(restaurant__price__lte = price_max)
 
-    # filtro x tag
-    if tag_raw:
+    # filtro x tag (soporta múltiples tags)
+    if tags_list:
+        # exact code match for tags selected
+        restaurants_qs = restaurants_qs.filter(tags__code__in = tags_list)
+        dishes_qs = dishes_qs.filter(
+            Q(tags__code__in = tags_list)
+            | Q(restaurant__tags__code__in = tags_list)
+        )
+    elif tag_raw:
         restaurants_qs = restaurants_qs.filter(
             Q(tags__code__icontains = tag_raw) | Q(tags__name__icontains = tag_raw)
         )
@@ -127,6 +141,11 @@ def buscar(request):
             | Q(restaurant__tags__code__icontains = tag_raw)
             | Q(restaurant__tags__name__icontains = tag_raw)
         )
+
+    # filtro x cuisines (múltiples selecciones)
+    if cuisines_list:
+        restaurants_qs = restaurants_qs.filter(cuisines__name__in = cuisines_list)
+        dishes_qs = dishes_qs.filter(restaurant__cuisines__name__in = cuisines_list)
 
     # Prefetch y anotaciones
     restaurants_qs = (
@@ -177,6 +196,8 @@ def buscar(request):
         "rating_min": rating_min_raw,
         "price_max": price_max_raw,
         "tag": tag_raw,
+        "tags": tags_list,
+        "cuisines": cuisines_list,
         "restaurant_groups": restaurant_groups,
         "counts": {
             "restaurants": len(restaurant_groups),
