@@ -52,7 +52,7 @@
         <ul class="lista-resenas">
             {% for res in reseñas %}
                 <li>
-                    <strong>{{ res.restaurante.nombre }}</strong> — {{ res.fecha|date:"d/m/Y" }}<br>
+                    <strong>{{ res.restaurant }}</strong> — {{ res.created_at | date:"d/m/Y" }}<br>
                     {{ res.contenido }}
                 </li>
             {% endfor %}

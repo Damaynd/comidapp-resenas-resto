@@ -55,13 +55,8 @@
 
     <div class="cover">
         {% with cover=restaurante.photos.all.0 %}
-<<<<<<< HEAD
-            {% if cover %}
-                <img class="restaurant-cover" src="/media/{{ cover.path|cut:'data/'|pathquote }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
-=======
             {% if cover  and cover.image %}
                 <img class="restaurant-cover" src="{{ cover.image.url}}" alt="Foto de {{ restaurante.name }}" loading="lazy">
->>>>>>> origin/main
             {% else %}
                 <img class="restaurant-cover" src="{% static 'img/placeholder-restaurant.png' %}" alt="Sin foto">
             {% endif %}
@@ -87,11 +82,7 @@
                 <div class="carousel-track">
                     {% for photo in restaurante.photos.all %}
                         <div class="carousel-slide">
-<<<<<<< HEAD
-                            <img src="/media/{{ photo.path|cut:'data/'|pathquote }}" alt="{{ photo.category_label|default:photo.category }}" loading="lazy">
-=======
                             <img src="{{ photo.image.url}}" alt="{{ photo.category_label|default:photo.category }}" loading="lazy">
->>>>>>> origin/main
                         </div>
                     {% endfor %}
                 </div>
