@@ -37,19 +37,24 @@
         {% endif %}
         <!-- FIN FAVORITOS -->
 
-        <div class="chips">
-            {% for c in restaurante.cuisines.all %}
-                <span class="chip">{{ c.name }}</span>
-            {% empty %}
-                <span class="chip chip--empty">Sin categoría</span>
-            {% endfor %}
-        </div>
+        {% with tags=restaurante.tags.all %}
+            {% if tags %}
+                <div class="chips">
+                    {% for t in tags %}
+                        <span class="chip">{{ t.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
         <div class="links">
             {% if restaurante.url %}
                 <a class="btn" href="{{ restaurante.url }}" target="_blank" rel="noopener">Sitio web</a>
             {% endif %}
-            <a class="btn btn--secondary" href="https://www.google.com/maps?q={{ restaurante.lat }},{{ restaurante.lon }}" target="_blank" rel="noopener">Ver en el mapa</a>
+
+            <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query={{ restaurante.name|urlencode }}+{{ restaurante.address|urlencode }}&query_place_id=&center={{ restaurante.lat }},{{ restaurante.lon }}" target="_blank" rel="noopener">Ver en el mapa</a>
+
+
         </div>
     </div>
 
