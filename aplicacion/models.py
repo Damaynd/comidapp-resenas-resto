@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
-
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # =====================
 # Catálogos
@@ -201,3 +202,11 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return f"Review({self.user_id} → {self.dish_id}, rating = {self.rating})"
+
+
+@login_required  
+def perfil(request):
+    context = {
+        'usuario': request.user
+    }
+    return render(request, 'usuarios/perfil.html', context)

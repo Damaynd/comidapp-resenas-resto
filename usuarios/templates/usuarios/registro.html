@@ -1,44 +1,29 @@
-     <!DOCTYPE html>
-     <html lang="en">
-     <head>
-        <meta charset="UTF-8">
-        <title>Registro</title>
-     </head>
-     <body>
-        <h1> Registro </h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="nombre_usuario">Nombre</label>
-                <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
-            </div>
+{% extends 'base.html' %}
+{% load static %}
 
-            <div class="form-group">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
-            </div>
+{% block title %}Iniciar sesión{% endblock %}
 
-             <div class="form-group">
-                <label for="apodo">Apodo</label>
-                <input type="text" class="form-control" id="apodo" name="apodo" required>
-             </div>
+{% block contenido %}
+<link rel="stylesheet" href="{% static 'styles/usuarios.css' %}">
 
-            <div>
-                <label for="pronombre">Pronombre</label>
-                <select id="pronombre" class="form-control" name="pronombre" required>
-                    <option class="disabled" value="">Elige un pronombre</option>
-                    <option value="El">El</option>
-                    <option value="La">La</option>
-                    <option value="Le">Le</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
+<h1>Iniciar sesión</h1>
 
-             <div class="form-group">
-                 <label for="mail">Mail</label>
-                 <input type="email" class="form-control" id="mail" name="mail" required>
-             </div>
-             <button type="submit">Crear usuario</button>
-        </form>
-     </body>
-     </html>
+<form method="post" class="formulario-usuario">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ingresar</button>
+</form>
+
+{% if form.errors %}
+<ul class="errores">
+    {% for field in form %}
+        {% for error in field.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

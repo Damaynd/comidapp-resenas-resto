@@ -1,0 +1,103 @@
+/* Contenedor general que centra todo el contenido dentro del main */
+main.container {
+    display: flex;
+    justify-content: center; /* centra horizontal */
+    align-items: center;     /* centra vertical */
+    min-height: 80vh;        /* ocupa casi toda la altura de la página */
+    flex-direction: column;
+}
+
+/* Formulario con estilo de cajita */
+.formulario-usuario {
+    background: var(--panel);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Titulos centrados */
+.formulario-usuario h1 {
+    text-align: center;
+    color: var(--brand);
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs y botones ocupando todo el ancho */
+.formulario-usuario input,
+.formulario-usuario button {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+/* Botón con color de marca */
+.formulario-usuario button {
+    background: var(--brand);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.formulario-usuario button:hover {
+    background: var(--brand-700);
+}
+
+/* Errores */
+.errores {
+    color: var(--danger);
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.perfil-foto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.perfil-info p {
+    margin: 0.5rem 0;
+}
+
+.perfil-favoritos, .perfil-resenas {
+    margin-top: 1.5rem;
+}
+
+.perfil-favoritos ul, .perfil-resenas ul {
+    list-style: disc inside;
+    padding-left: 0;
+}
+
+.formulario-usuario {
+    max-width: 400px;
+    margin: 2rem auto; /* centrado horizontal y un poco de espacio arriba */
+    padding: 2rem;
+    background: var(--panel);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.formulario-usuario h1,
+.formulario-usuario h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.formulario-usuario ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.formulario-usuario li {
+    background: var(--elev);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+}

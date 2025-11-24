@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.db.models import Prefetch, Q, Count
 from aplicacion.models import Restaurant, Photo
@@ -167,12 +167,15 @@ def buscar(request):
     }
     return render(request, "buscar.html", ctx)
 
-def perfil(request):
-    return render(request, 'perfil.html')
+@login_required
+def toggle_favorito(request, restaurante_id):
+    restaurante = get_object_or_404(Restaurant, id=restaurante_id)
+    usuario = request.user
 
-def favoritos(request):
-    return render(request, 'favoritos.html')
+    # Si ya es favorito → lo quita
+    if restaurante in usuario.favoritos.all():
+        usuario.favoritos.remove(restaurante)
+    else:
+        usuario.favoritos.add(restaurante)
 
-
-def resenas(request):
-    return render(request, 'resenas.html')
+    return redirect('detalle_restaurante', restaurante_id=restaurante.id)
