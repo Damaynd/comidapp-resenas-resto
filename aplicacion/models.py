@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+# feature-forms
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # =========================
 # Catálogos
@@ -212,14 +215,16 @@ class RestaurantReview(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete = models.CASCADE
     )
-    rating = models.FloatField()
+    rating = models.FloatField(
+        validators=[MinValueValidator(1.0), MaxValueValidator(7.0)]
+    )
     comment = models.TextField(max_length = 500)
 
     # Para enlazar reseña y foto
     photo = models.ImageField(upload_to='review_photos/', blank=True, null=True)
     # Para enlazar reseña y tag
     tags = models.ManyToManyField(Tag, blank=True)
-    
+
     created_at = models.DateTimeField(auto_now_add = True)
 
     class Meta:

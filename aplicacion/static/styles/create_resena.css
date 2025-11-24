@@ -98,26 +98,87 @@
     box-sizing: border-box;
 }
 
-/* Tags / Checkboxes */
+/* =========================================
+   ARREGLO DE TAGS (ESTILO CHIPS/PASTILLAS)
+   ========================================= */
+
+/* =========================================
+   LISTA DE TAGS CON SCROLL (COMPACTA)
+   ========================================= */
+
 .checkboxTags {
     list-style: none;
-    padding: 0;
     margin: 0;
+    
+    /* 1. LIMITAR LA ALTURA (EL TRUCO DEL SCROLL) */
+    max-height: 180px;  /* Ajustado para mostrar aprox. 5 elementos */
+    overflow-y: auto;   /* Activa la barra de desplazamiento si hay más */
+    
+    /* 2. DISEÑO DE CAJA CONTENEDORA */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--elev); /* Fondo distinto para que parezca una caja */
+    padding: 5px;       /* Espacio interno de la caja */
+    
+    /* 3. ALINEACIÓN VERTICAL */
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 2px;           /* "Más juntas": poco espacio entre ítems */
 }
 
+/* ESTILO DE CADA ÍTEM */
 .checkboxTags li {
+    /* Quitamos bordes individuales para que se vea más limpio */
+    border: none;
+    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    transition: background 0.1s;
+}
+
+/* Efecto Hover al pasar por una opción */
+.checkboxTags li:hover {
+    background-color: color-mix(in srgb, var(--brand) 15%, transparent);
+}
+
+/* LABEL (TEXTO + CHECKBOX) */
+.checkboxTags label {
     display: flex;
     align-items: center;
-    background: var(--elev);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 0.3rem 0.8rem;
+    width: 100%;
+    padding: 8px 10px;  /* Padding compacto */
+    cursor: pointer;
     font-size: 0.9rem;
+    color: var(--fg);
+    user-select: none;
 }
 
+/* INPUT CHECKBOX */
+.checkboxTags input[type="checkbox"] {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--brand);
+    cursor: pointer;
+}
+
+/* --- ESTILO OPCIONAL PARA LA BARRA DE SCROLL (SCROLLBAR) --- */
+/* Esto hace que la barrita se vea delgada y moderna */
+.checkboxTags::-webkit-scrollbar {
+    width: 8px;
+}
+.checkboxTags::-webkit-scrollbar-track {
+    background: transparent;
+}
+.checkboxTags::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 4px;
+    border: 2px solid var(--elev); /* Crea un margen alrededor */
+}
+.checkboxTags::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted);
+}
 .submit-btn {
     width: 100%;
     background-color: var(--brand);
@@ -211,3 +272,17 @@
 }
 
 /* Ajuste para modo oscuro (automático si usas tus variables) */
+
+
+
+/* Quitar flechas de input number en Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Quitar flechas en Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
