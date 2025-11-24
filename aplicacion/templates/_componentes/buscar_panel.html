@@ -11,6 +11,7 @@
         placeholder="Busca por nombre, dirección, plato o tag"
       >
       <button type="submit">Buscar</button>
+      <button type="button" class="btn-filtros" data-action="open-filters" aria-haspopup="dialog">🔍 Filtros</button>
     </div>
 
     <details class="search-panel__filters">
@@ -53,3 +54,5 @@
     </details>
   </form>
 </section>
+
+{% include "_componentes/filtros_modal.html" %}

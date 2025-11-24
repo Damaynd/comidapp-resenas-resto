@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="{% static 'styles/main.css' %}">
   <!-- Estilos del header (usa variables de style.css) -->
   <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <!-- Estilos para panel de filtros y modal personalizados -->
+    <link rel="stylesheet" href="{% static 'styles/filters.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -28,6 +30,9 @@
 </main>
 
 {% block footer %}{% endblock %}
+
+<!-- Scripts personalizados -->
+<script src="{% static 'js/filters.js' %}"></script>
 
 </body>
 </html>

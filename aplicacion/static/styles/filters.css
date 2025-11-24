@@ -1,0 +1,61 @@
+/* Estilos para el modal de filtros y el botón, usando variables de main.css */
+
+.btn-filtros {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: .45rem .8rem;
+  border-radius: 10px;
+  margin-left: .5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-filtros:hover { background: var(--brand-700); }
+
+/* Modal base (oculto por defecto) */
+#filtrosModal.modal-hidden { display: none; }
+#filtrosModal { position: fixed; inset: 0; z-index: 1200; }
+
+.modal-backdrop {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.35);
+}
+
+.modal-window {
+  position: relative;
+  width: min(920px, calc(100% - 2rem));
+  max-height: calc(100vh - 4rem);
+  margin: 2rem auto;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: auto;
+  border: 1px solid var(--border-soft);
+}
+
+.modal-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: .9rem 1rem; border-bottom:1px solid var(--border-soft);
+}
+
+.modal-header h3 { margin:0; color:var(--brand); }
+.modal-close { background:transparent; border:none; font-size:1.1rem; cursor:pointer; }
+
+.modal-body { padding: 1rem; }
+.modal-footer { display:flex; gap:.5rem; justify-content:flex-end; padding: .8rem 1rem; border-top:1px solid var(--border-soft); }
+
+/* Filtros layout */
+.filtros details { margin-bottom:.5rem; }
+.filtros summary { cursor:pointer; font-weight:600; color:var(--muted); }
+.sub-filtros { padding: .5rem 0 0 0.6rem; color:var(--muted); }
+
+/* Make buttons consistent with site */
+.btn { padding: .45rem .8rem; border-radius: 8px; font-weight:600; }
+.btn-primary { background: var(--brand); color:#fff; border:none; }
+.btn-primary:hover { background: var(--brand-700); }
+.btn-secondary { background: var(--panel); border:1px solid var(--border); color:var(--fg); }
+
+@media (max-width:600px) {
+  .modal-window { margin: 1rem; }
+  .modal-body { padding: .6rem; }
+}
