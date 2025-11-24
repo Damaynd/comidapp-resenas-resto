@@ -2,70 +2,70 @@
 {% load static %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'styles/detalle_restaurante.css' %}">
+<link rel = "stylesheet" href = "{% static 'styles/detalle_restaurante.css' %}">
 {% endblock %}
 
 {% block contenido %}
-<section class="restaurant-header">
-    <div class="title-and-meta">
-        <h1 class="restaurant-name">{{ restaurante.name }}</h1>
-        <div class="meta">
-            <span class="rating">⭐ {{ restaurante.avg_rating|default:0 }} ({{ restaurante.review_count|default:0 }} reseñas)</span>
-            <span class="price">Precio: {{ restaurante.price }}</span>
+<section class = "restaurant-header">
+    <div class = "title-and-meta">
+        <h1 class = "restaurant-name">{{ restaurante.name }}</h1>
+        <div class = "meta">
+            <span class = "rating">⭐ {{ restaurante.avg_rating|default:0 }} ({{ restaurante.review_count|default:0 }} reseñas)</span>
+            <span class = "price">Precio: {{ restaurante.price }}</span>
         </div>
-        <div class="chips">
+        <div class = "chips">
             {% for c in restaurante.cuisines.all %}
-                <span class="chip">{{ c.name }}</span>
+                <span class = "chip">{{ c.name }}</span>
             {% empty %}
-                <span class="chip chip--empty">Sin categoría</span>
+                <span class = "chip chip--empty">Sin categoría</span>
             {% endfor %}
         </div>
-        <div class="links">
+        <div class = "links">
             {% if restaurante.url %}
-                <a class="btn" href="{{ restaurante.url }}" target="_blank" rel="noopener">Sitio web</a>
+                <a class = "btn" href = "{{ restaurante.url }}" target = "_blank" rel = "noopener">Sitio web</a>
             {% endif %}
-            <a class="btn btn--secondary" href="https://www.google.com/maps?q={{ restaurante.lat }},{{ restaurante.lon }}" target="_blank" rel="noopener">Ver en el mapa</a>
+            <a class = "btn btn--secondary" href = "https://www.google.com/maps?q={{ restaurante.lat }},{{ restaurante.lon }}" target = "_blank" rel = "noopener">Ver en el mapa</a>
         </div>
     </div>
-    <div class="cover">
-        {% with cover=restaurante.photos.all.0 %}
+    <div class = "cover">
+        {% with cover = restaurante.photos.all.0 %}
             {% if cover %}
-                <img class="restaurant-cover" src="/media/{{ cover.path|cut:'data/' }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+                <img class = "restaurant-cover" src = "/media/{{ cover.path|cut:'data/' }}" alt = "Foto de {{ restaurante.name }}" loading = "lazy">
             {% else %}
-                <img class="restaurant-cover" src="{% static 'img/placeholder-restaurant.png' %}" alt="Sin foto">
+                <img class = "restaurant-cover" src = "{% static 'img/placeholder-restaurant.png' %}" alt = "Sin foto">
             {% endif %}
         {% endwith %}
     </div>
 </section>
 
-<section class="restaurant-info">
-    <h2>Información</h2>
-    <ul class="info-list">
-        <li><strong>Dirección:</strong> {{ restaurante.address }}</li>
-        <li><strong>Creado:</strong> {{ restaurante.created_at|date:'Y-m-d H:i' }}</li>
-        <li><strong>Actualizado:</strong> {{ restaurante.updated_at|date:'Y-m-d H:i' }}</li>
+<section class = "restaurant-info">
+    <h2> Información </h2>
+    <ul class = "info-list">
+        <li><strong> Dirección: </strong> {{ restaurante.address }}</li>
+        <li><strong> Creado: </strong> {{ restaurante.created_at|date:'Y-m-d H:i' }}</li>
+        <li><strong> Actualizado: </strong> {{ restaurante.updated_at|date:'Y-m-d H:i' }}</li>
     </ul>
 </section>
 
-<section class="restaurant-gallery">
-    <h2>Galería</h2>
+<section class = "restaurant-gallery">
+    <h2> Galería </h2>
     {% if restaurante.photos.all %}
-        <div class="carousel-container">
-            <button class="carousel-btn carousel-btn-prev" onclick="moveCarousel(-1)">‹</button>
-            <div class="carousel">
-                <div class="carousel-track">
+        <div class = "carousel-container">
+            <button class = "carousel-btn carousel-btn-prev" onclick = "moveCarousel(-1)">‹</button>
+            <div class = "carousel">
+                <div class = "carousel-track">
                     {% for photo in restaurante.photos.all %}
-                        <div class="carousel-slide">
-                            <img src="/media/{{ photo.path|cut:'data/' }}" alt="{{ photo.category_label|default:photo.category }}" loading="lazy">
+                        <div class = "carousel-slide">
+                            <img src = "/media/{{ photo.path|cut:'data/' }}" alt = "{{ photo.category_label|default:photo.category }}" loading="lazy">
                         </div>
                     {% endfor %}
                 </div>
             </div>
-            <button class="carousel-btn carousel-btn-next" onclick="moveCarousel(1)">›</button>
+            <button class = "carousel-btn carousel-btn-next" onclick = "moveCarousel(1)">›</button>
         </div>
-        <div class="carousel-indicators">
+        <div class = "carousel-indicators">
             {% for photo in restaurante.photos.all %}
-                <span class="carousel-dot" onclick="goToSlide({{ forloop.counter0 }})"></span>
+                <span class = "carousel-dot" onclick = "goToSlide({{ forloop.counter0 }})"></span>
             {% endfor %}
         </div>
         <script>
@@ -96,45 +96,45 @@
             updateCarousel();
         </script>
     {% else %}
-        <p>No hay fotos disponibles.</p>
+        <p> No hay fotos disponibles. </p>
     {% endif %}
 </section>
 
-<section class="restaurant-dishes">
-    <h2>Platos</h2>
-    <div class="cards">
+<section class = "restaurant-dishes">
+    <h2> Platos </h2>
+    <div class = "cards">
         {% for dish in restaurante.dishes.all %}
-            <article class="card">
+            <article class = "card">
                 <header>
                     <h3>{{ dish.name }}</h3>
-                    {% if dish.price_ref %}<span class="badge">$ {{ dish.price_ref }}</span>{% endif %}
+                    {% if dish.price_ref %}<span class = "badge">$ {{ dish.price_ref }}</span>{% endif %}
                 </header>
                 {% if dish.description %}
-                    <p class="muted">{{ dish.description }}</p>
+                    <p class = "muted">{{ dish.description }}</p>
                 {% endif %}
-                <div class="tags">
+                <div class = "tags">
                     {% for tag in dish.tags.all %}
-                        <span class="tag">{{ tag.name }}</span>
+                        <span class = "tag">{{ tag.name }}</span>
                     {% empty %}
-                        <span class="tag tag--empty">Sin etiquetas</span>
+                        <span class = "tag tag--empty">Sin etiquetas</span>
                     {% endfor %}
                 </div>
             </article>
         {% empty %}
-            <p>No hay platos registrados.</p>
+            <p> No hay platos registrados. </p>
         {% endfor %}
     </div>
 </section>
 
-<section class="restaurant-accessibility">
-    <h2>Accesibilidad</h2>
-    <ul class="access-list">
+<section class = "restaurant-accessibility">
+    <h2> Accesibilidad </h2>
+    <ul class = "access-list">
         {% for ar in restaurante.access_reports.all %}
             <li>
                 <strong>{{ ar.feature.name }}</strong>
-                <span class="badge status-{{ ar.status }}">{{ ar.status }}</span>
-                {% if ar.notes %}<span class="muted"> · {{ ar.notes }}</span>{% endif %}
-                {% if ar.source_type %}<span class="muted"> · fuente: {{ ar.source_type }}</span>{% endif %}
+                <span class = "badge status-{{ ar.status }}">{{ ar.status }}</span>
+                {% if ar.notes %}<span class = "muted"> · {{ ar.notes }}</span>{% endif %}
+                {% if ar.source_type %}<span class = "muted"> · fuente: {{ ar.source_type }}</span>{% endif %}
             </li>
         {% empty %}
             <li>No hay reportes de accesibilidad.</li>
@@ -142,22 +142,22 @@
     </ul>
 </section>
 
-<section class="restaurant-reviews">
+<section class = "restaurant-reviews">
     <h2>Reseñas recientes</h2>
-    <div class="cards">
+    <div class = "cards">
         {% for dish in restaurante.dishes.all %}
             {% for review in dish.reviews.all %}
-                <article class="card review">
+                <article class = "card review">
                     <header>
                         <h3>{{ dish.name }}</h3>
-                        <span class="stars" aria-label="{{ review.rating }} estrellas">
+                        <span class = "stars" aria-label = "{{ review.rating }} estrellas">
                             {% for _ in "12345"|slice:":" %}
                                 {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
                             {% endfor %}
                         </span>
                     </header>
                     <p>{{ review.comment }}</p>
-                    <footer class="muted">Precio pagado: $ {{ review.price_paid }} · {{ review.created_at|date:'Y-m-d H:i' }}</footer>
+                    <footer class = "muted">Precio pagado: $ {{ review.price_paid }} · {{ review.created_at|date:'Y-m-d H:i' }}</footer>
                 </article>
             {% endfor %}
         {% empty %}
@@ -166,6 +166,6 @@
     </div>
 </section>
 
-<p><a href="/">← Volver al listado</a></p>
+<p><a href = "/"> ← Volver al listado </a></p>
 
 {% endblock %}

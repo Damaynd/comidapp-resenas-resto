@@ -1,69 +1,105 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block contenido %}
-<div class="container" style="max-width: 900px;">
+<div>
   <h1>Buscar</h1>
 
-  <form action="{% url 'buscar' %}" method="get" style="margin: 12px 0;">
-    <input type="text" name="q" value="{{ q }}" placeholder="Busca restaurantes o platos"
-           style="width: 70%; padding: 8px;">
-    <button type="submit">Buscar</button>
+  <form action = "{% url 'buscar' %}" method = "get" style = "margin: 12px 0;">
+    <input
+      type = "text"
+      name = "q"
+      value = "{{ q }}"
+      placeholder = "Busca restaurantes o platos"
+      style = "width: 70%; padding: 8px;"
+    >
+    <button type = "submit">Buscar</button>
   </form>
 
   {% if q %}
-    <p>Resultados para <strong>{{ q }}</strong> - Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}</p>
+    <p>
+      Resultados para <strong>{{ q }}</strong>
+      – Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}
+    </p>
 
-    <hr>
-    <h2>Restaurantes</h2>
-    {% if restaurants %}
-      <ul>
-        {% for r in restaurants %}
-          <li>
-            <strong>
-              <a href="{% url 'detalle_restaurante' r.id %}">
-                {{ r.name }}
-              </a>
-            </strong>
-            - {{ r.address }}
-            {% if r.url %} · <a href="{{ r.url }}" target="_blank" rel="noopener">web</a>{% endif %}
-            {% if r.cuisines.all %}
-              · Cuisines:
-              {% for c in r.cuisines.all %}{{ c.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
-            {% endif %}
-            {% if r.tags.all %}
-              · Tags:
-              {% for t in r.tags.all %}{{ t.code }}{% if not forloop.last %}, {% endif %}{% endfor %}
-            {% endif %}
-            · Platos: {{ r.n_dishes }}
-          </li>
+    {% if restaurant_groups %}
+      <ul class = "all-restaurant-container">
+        {% for group in restaurant_groups %}
+          {% with restaurante=group.restaurant platos=group.dishes %}
+            <li class = "single-restaurant-container">
+              <div class = "restaurant-image">
+                {% if restaurante.cover_photos %}
+                {% with photo=restaurante.cover_photos.0 %}
+                <img class = "restaurant-photo"
+                     src = "/media/{{ photo.path|cut:'data/' }}"
+                     alt = "Foto de {{ restaurante.name }}"
+                     loading="lazy">
+                {% endwith %}
+                {% else %}
+                {% with any=restaurante.photos.all.0 %}
+                {% if any %}
+                <img class = "restaurant-photo"
+                     src = "/media/{{ any.path|cut:'data/' }}"
+                     alt = "Foto de {{ restaurante.name }}"
+                     loading = "lazy">
+                {% else %}
+                <img class = "restaurant-photo"
+                     src = "{% static 'img/placeholder-restaurant.png' %}"
+                     alt = "Sin foto"
+                     loading = "lazy">
+                {% endif %}
+                {% endwith %}
+                {% endif %}
+                </div>
+
+              {# nombre, rating y dirección #}
+              <div class = "restaurant-name-address-rating">
+                <div class = "restaurant-name-rating">
+                  <div class = "restaurant-name">
+                    <a href = "{% url 'detalle_restaurante' restaurante.id %}">
+                      {{ restaurante.name }}
+                    </a>
+                  </div>
+                  <div class = "restaurant-rating">
+                    <p> Rating: {{ restaurante.avg_rating }} </p>
+                  </div>
+                </div>
+                <div class = "restaurant-address">
+                  <p> {{ restaurante.address }} </p>
+                </div>
+              </div>
+
+              <div class = "restaurant-description-price">
+                <div class = "restaurant-description">
+                  <p> Restaurant familiar </p>
+                </div>
+                <div class = "restaurant-price">
+                  <p> Rango de precio: {{ restaurante.price }} </p>
+                </div>
+              </div>
+
+              {# Platos que matchean dentro de este restaurante #}
+              {% if platos %}
+                <div class = "search-dishes">
+                  <p><strong> Platos que coinciden con la búsqueda: </strong></p>
+                  <ul class = "search-dish-list">
+                    {% for d in platos %}
+                      <li>
+                        {{ d.name }}
+                        {% if d.dish_type %}
+                          ({{ d.dish_type.name }})
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            </li>
+          {% endwith %}
         {% endfor %}
       </ul>
     {% else %}
-      <p>Sin restaurantes.</p>
-    {% endif %}
-
-    <hr>
-    <h2>Platos</h2>
-    {% if dishes %}
-      <ul>
-        {% for d in dishes %}
-          <li>
-            <strong>{{ d.name }}</strong>
-            {% if d.dish_type %} ({{ d.dish_type.name }}){% endif %}
-            - en <em>
-              <a href="{% url 'detalle_restaurante' d.restaurant.id %}">
-                {{ d.restaurant.name }}
-              </a>
-            </em>
-            {% if d.tags.all %}
-              · Tags:
-              {% for t in d.tags.all %}{{ t.code }}{% if not forloop.last %}, {% endif %}{% endfor %}
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Sin platos.</p>
+      <p> No se encontraron restaurantes para esta búsqueda. </p>
     {% endif %}
   {% endif %}
 </div>
