@@ -101,3 +101,11 @@ main.container {
     margin-bottom: 0.5rem;
     border-radius: 8px;
 }
+.foto-perfil {
+    width: 150px;          /* tamaño final fijo */
+    height: 150px;
+    border-radius: 50%;    /* que quede circular */
+    object-fit: cover;     /* recorta manteniendo proporción */
+    display: block;
+    margin: 1rem auto;     /* centrado */
+}

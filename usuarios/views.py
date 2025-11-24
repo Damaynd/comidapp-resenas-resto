@@ -104,3 +104,9 @@ def editar_perfil(request):
         form = PerfilForm(instance=usuario)
 
     return render(request, 'usuarios/editar_perfil.html', {'form': form})
+
+@login_required
+def favoritos(request):
+    usuario = request.user
+    favoritos = usuario.favoritos.all()   # ← así se obtienen
+    return render(request, 'usuarios/favoritos.html', {"favoritos": favoritos})

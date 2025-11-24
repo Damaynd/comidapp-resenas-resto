@@ -27,12 +27,12 @@
 
     <hr>
 
-    <h2>⭐ Mis Restaurantes Favoritos</h2>
+    <h2>Mis Restaurantes Favoritos</h2>
  
     {% if favoritos %}
         <ul>
         {% for r in favoritos %}
-            <li>{{ r.nombre }}</li>
+            <li>{{ r.name }}</li>
         {% endfor %}
         </ul>
     {% else %}
@@ -42,7 +42,7 @@
 
     <hr>
 
-    <h2>📝 Mis Reseñas</h2>
+    <h2>Mis Reseñas</h2>
     {% if reseñas %}
         <ul class="lista-resenas">
             {% for res in reseñas %}
