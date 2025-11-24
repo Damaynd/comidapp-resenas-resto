@@ -1,15 +1,70 @@
 {% extends "base.html" %}
-{% block title %}Buscar{% endblock %}
+
 {% block contenido %}
+<div class="container" style="max-width: 900px;">
   <h1>Buscar</h1>
-  <p>Término: <strong>{{ q }}</strong></p>
-  {% if resultados %}
-    <ul>
-      {% for r in resultados %}
-        <li>{{ r }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Sin resultados.</p>
+
+  <form action="{% url 'buscar' %}" method="get" style="margin: 12px 0;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Busca restaurantes o platos"
+           style="width: 70%; padding: 8px;">
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% if q %}
+    <p>Resultados para <strong>{{ q }}</strong> - Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}</p>
+
+    <hr>
+    <h2>Restaurantes</h2>
+    {% if restaurants %}
+      <ul>
+        {% for r in restaurants %}
+          <li>
+            <strong>
+              <a href="{% url 'detalle_restaurante' r.id %}">
+                {{ r.name }}
+              </a>
+            </strong>
+            - {{ r.address }}
+            {% if r.url %} · <a href="{{ r.url }}" target="_blank" rel="noopener">web</a>{% endif %}
+            {% if r.cuisines.all %}
+              · Cuisines:
+              {% for c in r.cuisines.all %}{{ c.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+            {% endif %}
+            {% if r.tags.all %}
+              · Tags:
+              {% for t in r.tags.all %}{{ t.code }}{% if not forloop.last %}, {% endif %}{% endfor %}
+            {% endif %}
+            · Platos: {{ r.n_dishes }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Sin restaurantes.</p>
+    {% endif %}
+
+    <hr>
+    <h2>Platos</h2>
+    {% if dishes %}
+      <ul>
+        {% for d in dishes %}
+          <li>
+            <strong>{{ d.name }}</strong>
+            {% if d.dish_type %} ({{ d.dish_type.name }}){% endif %}
+            - en <em>
+              <a href="{% url 'detalle_restaurante' d.restaurant.id %}">
+                {{ d.restaurant.name }}
+              </a>
+            </em>
+            {% if d.tags.all %}
+              · Tags:
+              {% for t in d.tags.all %}{{ t.code }}{% if not forloop.last %}, {% endif %}{% endfor %}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Sin platos.</p>
+    {% endif %}
   {% endif %}
+</div>
 {% endblock %}
