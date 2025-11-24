@@ -10,6 +10,19 @@
 
 <form method="post" class="formulario-usuario">
     {% csrf_token %}
+
+    {# Mostrar error enviado desde la vista #}
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {# Mantener next para redirigir donde corresponde #}
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% elif request.POST.next %}
+      <input type="hidden" name="next" value="{{ request.POST.next }}">
+    {% endif %}
+
     <div class="form-group">
         <label for="id_username">Usuario</label>
         <input type="text" name="username" id="id_username" required>
@@ -22,4 +35,11 @@
 
     <button type="submit">Ingresar</button>
 </form>
+
+<div style="margin-top: 15px;">
+    <p>¿No tienes cuenta?
+        <a href="{% url 'registro' %}">Regístrate aquí</a>
+    </p>
+</div>
+
 {% endblock %}

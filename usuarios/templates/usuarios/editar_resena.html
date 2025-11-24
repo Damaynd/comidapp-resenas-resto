@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Editar Reseña{% endblock %}
+
+{% block contenido %}
+<h1>Editar Reseña</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="contenido" rows="5" cols="50">{{ resena.contenido }}</textarea>
+    <br>
+    <button type="submit" class="btn-editar">Guardar cambios</button>
+</form>
+
+<a href="{% url 'resenas' %}">Volver</a>
+{% endblock %}

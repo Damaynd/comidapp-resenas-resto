@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Reseñas{% endblock %}
+
+{% block contenido %}
+<link rel="stylesheet" href="{% static 'styles/usuarios.css' %}">
+
+<h1>📝 Mis Reseñas</h1>
+
+{% if resenas %}
+<ul class="lista-resenas">
+
+    {% for r in resenas %}
+    <li class="resena-item">
+
+        <div class="resena-header">
+            <strong>
+                <a href="/restaurantes/{{ r.restaurant.id }}/">
+                    {{ r.restaurant.nombre }}
+                </a>
+            </strong>
+
+            <span class="fecha">{{ r.fecha|date:"d/m/Y" }}</span>
+        </div>
+
+        <p>{{ r.contenido }}</p>
+
+        <div class="resena-acciones">
+            <a class="btn-editar" href="{% url 'editar_resena' r.id %}">Editar</a>
+            <a class="btn-eliminar" href="{% url 'eliminar_resena' r.id %}">Eliminar</a>
+        </div>
+
+    </li>
+    {% endfor %}
+
+</ul>
+
+{% else %}
+<p>No has escrito reseñas todavía.</p>
+{% endif %}
+
+{% endblock %}

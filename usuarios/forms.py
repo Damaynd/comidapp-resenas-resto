@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Usuario
 
+
 class RegistroUsuarioForm(UserCreationForm):
     first_name = forms.CharField(
         label="Nombre",
@@ -47,3 +48,10 @@ class RegistroUsuarioForm(UserCreationForm):
         error_messages = {
             "password_mismatch": "Las contraseñas no coinciden.",
         }
+
+
+
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['username', 'email', 'foto_perfil']

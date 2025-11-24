@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Reseña{% endblock %}
+
+{% block contenido %}
+<h2>¿Quieres eliminar esta reseña?</h2>
+
+<p><strong>{{ resena.restaurant.nombre }}</strong></p>
+<p>{{ resena.contenido }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn-eliminar">Eliminar</button>
+</form>
+
+<a href="{% url 'resenas' %}">Cancelar</a>
+{% endblock %}
