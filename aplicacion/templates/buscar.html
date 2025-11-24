@@ -1,15 +1,123 @@
 {% extends "base.html" %}
-{% block title %}Buscar{% endblock %}
+{% load static %}
+
+{% block filtro %}
+  {% include "_componentes/buscar_panel.html" %}
+{% endblock %}
+
 {% block contenido %}
-  <h1>Buscar</h1>
-  <p>Término: <strong>{{ q }}</strong></p>
-  {% if resultados %}
-    <ul>
-      {% for r in resultados %}
-        <li>{{ r }}</li>
-      {% endfor %}
-    </ul>
+<div>
+  {% if q or rating_min or price_max or tag %}
+    <h1>Resultados</h1>
+    <p>
+      {% if q %}Para <strong>{{ q }}</strong> – {% endif %}
+      Restaurantes: {{ counts.restaurants }} · Platos: {{ counts.dishes }}
+    </p>
+
+    {% if restaurant_groups %}
+      <ul class="all-restaurant-container">
+        {% for group in restaurant_groups %}
+          {% with restaurante=group.restaurant platos=group.dishes %}
+            <li class="single-restaurant-container">
+
+              <div class="restaurant-image">
+                {% if restaurante.cover_photos %}
+                  {% with photo=restaurante.cover_photos.0 %}
+                    <img class="restaurant-photo"
+                         src="/media/{{ photo.path|cut:'data/' }}"
+                         alt="Foto de {{ restaurante.name }}"
+                         loading="lazy">
+                  {% endwith %}
+                {% else %}
+                  {% with any=restaurante.photos.all.0 %}
+                    {% if any %}
+                      <img class="restaurant-photo"
+                           src="/media/{{ any.path|cut:'data/' }}"
+                           alt="Foto de {{ restaurante.name }}"
+                           loading="lazy">
+                    {% else %}
+                      <img class="restaurant-photo"
+                           src="{% static 'img/placeholder-restaurant.png' %}"
+                           alt="Sin foto"
+                           loading="lazy">
+                    {% endif %}
+                  {% endwith %}
+                {% endif %}
+              </div>
+
+              <div class="restaurant-name-address-rating">
+                <div class="restaurant-name-rating">
+                  <div class="restaurant-name">
+                    <a href="{% url 'detalle_restaurante' restaurante.id %}">
+                      {{ restaurante.name }}
+                    </a>
+                  </div>
+                  <div class="restaurant-rating">
+                    <p>Rating: {{ restaurante.avg_rating }}</p>
+                  </div>
+                </div>
+                <div class="restaurant-address">
+                  <p>{{ restaurante.address }}</p>
+                </div>
+              </div>
+
+              <div class="restaurant-description-price">
+                <div class="restaurant-description">
+                  <p>Restaurant familiar</p>
+                </div>
+                <div class="restaurant-price">
+                  <p>Rango de precio: {{ restaurante.price }}</p>
+                </div>
+              </div>
+
+              {% with tags=restaurante.tags.all %}
+                {% if tags %}
+                  <div class="restaurant-tags">
+                    <p>
+                      <strong>Tags del restaurante:</strong>
+                      {% for t in tags %}
+                        {{ t.code }}{% if not forloop.last %}, {% endif %}
+                      {% endfor %}
+                    </p>
+                  </div>
+                {% endif %}
+              {% endwith %}
+
+              {% if platos %}
+                <div class="search-dishes">
+                  <p><strong>Platos que coinciden con la búsqueda:</strong></p>
+                  <ul class="search-dish-list">
+                    {% for d in platos %}
+                      <li>
+                        {{ d.name }}
+                        {% if d.dish_type %}
+                          ({{ d.dish_type.name }})
+                        {% endif %}
+
+                        {% with dish_tags=d.tags.all %}
+                          {% if dish_tags %}
+                            – Tags:
+                            {% for t in dish_tags %}
+                              {{ t.code }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+            </li>
+          {% endwith %}
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No se encontraron restaurantes para estos criterios.</p>
+    {% endif %}
   {% else %}
-    <p>Sin resultados.</p>
+    <h1>Buscar restaurantes y platos</h1>
+    <p>Usa el buscador superior para filtrar por texto, rating, precio y tags.</p>
   {% endif %}
+</div>
 {% endblock %}

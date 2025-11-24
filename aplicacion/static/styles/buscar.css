@@ -1,0 +1,20 @@
+.search-dishes {
+  margin-top: .75rem;
+  padding-top: .5rem;
+  border-top: 1px dashed var(--border-soft);
+  font-size: .9rem;
+  color: var(--muted);
+}
+
+.search-dishes strong {
+  color: var(--fg);
+}
+
+.search-dish-list {
+  margin: .35rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.search-dish-list li {
+  margin-bottom: .15rem;
+}

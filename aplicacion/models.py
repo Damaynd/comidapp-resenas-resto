@@ -4,9 +4,9 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-# =========================
+# =====================
 # Catálogos
-# =========================
+# =====================
 class Cuisine(models.Model):
     name = models.CharField(max_length = 100, unique = True)
 
@@ -29,15 +29,15 @@ class Tag(models.Model):
     code = models.SlugField(max_length = 100, unique = True)
     name = models.CharField(max_length = 100, unique = True)
     scope = models.CharField(max_length = 20, choices = SCOPE, default = "both")
-    group = models.CharField(max_length = 50, blank = True)  # opcional: "dietary" | "feature"
+    group = models.CharField(max_length = 50, blank = True)
 
     def __str__(self) -> str:
         return self.name
 
 
-# =========================
-# Platos canónicos (para búsquedas)
-# =========================
+# ========================
+# Platos genéricos (para búsquedas)
+# ========================
 class DishType(models.Model):
     """
     Plato canónico (p. ej. 'barros-luco', 'papas-fritas').
@@ -49,6 +49,9 @@ class DishType(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        indexes = [models.Index(fields = ['name']), models.Index(fields = ['code'])]
 
 
 class DishTypeAlias(models.Model):
@@ -66,9 +69,9 @@ class DishTypeAlias(models.Model):
         return f"{self.name} → {self.dish_type.name}"
 
 
-# =========================
+# =======================
 # Core
-# =========================
+# =======================
 class Restaurant(models.Model):
     name = models.CharField(max_length = 100)
     address = models.CharField(max_length = 100)
@@ -87,6 +90,11 @@ class Restaurant(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        models.Index(fields = ["name"])
+        models.Index(fields = ["address"])
+
 
 
 class Dish(models.Model):
@@ -139,9 +147,7 @@ class DishTag(models.Model):
         return f"{self.dish.name} ⟷ {self.tag.code} (cross_contamination = {self.cross_contamination})"
 
 
-# =========================
 # Contenido generado por usuarios
-# =========================
 class Photo(models.Model):
     class Category(models.TextChoices):
         KITCHEN = "kitchen", "kitchen"

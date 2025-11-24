@@ -23,22 +23,6 @@
 
 .menu { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
 
-/* Buscador */
-.search-form input[type="text"] {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: .4rem .6rem;
-  color: var(--fg);
-  font-size: .9rem;
-  width: 180px;
-  outline: none;
-  transition: border .2s, box-shadow .2s;
-}
-.search-form input[type="text"]:focus {
-  border-color: var(--brand-700);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand) 40%, transparent);
-}
 
 /* Enlaces del header */
 .header a {
