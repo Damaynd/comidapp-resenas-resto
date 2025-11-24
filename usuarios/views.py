@@ -3,7 +3,23 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+
+from aplicacion.models import Review
 from .forms import RegistroUsuarioForm
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def perfil(request):
+    user = request.user
+    # Reseñas del usuario
+    reseñas = Review.objects.filter(user=user)
+    # Restaurantes favoritos (si lo agregas en un ManyToMany en Usuario)
+    favoritos = getattr(user, 'favoritos', None)
+    return render(request, 'usuarios/perfil.html', {
+        'usuario': user,
+        'reseñas': reseñas,
+        'favoritos': favoritos
+    })
 
 def registro(request):
     if request.method == 'POST':
@@ -24,12 +40,11 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')  # o la página principal de tu app
+            return redirect('home')  # <--- aquí
         else:
-            messages.error(request, "Usuario o contraseña incorrectos.")
+            # mostrar mensaje de error
+            return render(request, 'usuarios/login.html', {'error': 'Usuario o contraseña incorrectos'})
     return render(request, 'usuarios/login.html')
-
-
 def logout_view(request):
     logout(request)
     return redirect('login')
