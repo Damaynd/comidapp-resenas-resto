@@ -3,16 +3,6 @@ from .models import RestaurantReview, Tag
 
 class RestaurantReviewForm(forms.ModelForm):
 
-    # Campo para subir una foto
-    photo = forms.ImageField(
-        required=False,
-        label="Sube una foto",
-        widget=forms.ClearableFileInput(
-            attrs={
-                'class':'form-control-file'
-            }
-        )
-    )
     # Campo para seleccionar tags
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.filter(scope__in=["restaurant", "both"]),
@@ -28,7 +18,7 @@ class RestaurantReviewForm(forms.ModelForm):
     class Meta:
         model = RestaurantReview
         # Campos del modelo que el usuario debe llenar
-        fields = ['rating', 'comment']
+        fields = ['rating', 'comment', 'photo']
 
         widgets = {
             'rating':forms.NumberInput(
@@ -44,10 +34,16 @@ class RestaurantReviewForm(forms.ModelForm):
                     'placeholder':'Escribe tu opinión aquí',
                     'rows': 5
                 }
+            ),
+            'photo': forms.ClearableFileInput(
+                attrs={
+                    'class':'form-control-file'
+                }
             )
         }
 
         labels = {
             'rating':'Evalúa el lugar (1-7)',
             'comment':'Deja tu comentario',
+            'photo': 'Sube una foto (opcional)'
         }

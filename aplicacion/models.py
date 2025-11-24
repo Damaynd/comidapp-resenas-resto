@@ -214,6 +214,10 @@ class RestaurantReview(models.Model):
     )
     rating = models.FloatField()
     comment = models.TextField(max_length = 500)
+
+    # Para enlazar reseña y foto
+    photo = models.ImageField(upload_to='review_photos/', blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add = True)
 
     class Meta:
