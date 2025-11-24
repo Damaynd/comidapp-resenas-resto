@@ -18,31 +18,36 @@
         {% else %}
             <img src="{% static 'images/default-user.png' %}" class="foto-perfil">
         {% endif %}
-        <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
 
+        <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
 
         <p><strong>Email:</strong> {{ usuario.email }}</p>
         <p><strong>Fecha de registro:</strong> {{ usuario.date_joined|date:"d/m/Y" }}</p>
+
+        <!-- Botón de logout -->
+        <form action="{% url 'logout' %}" method="post" style="margin-top:10px;">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">Cerrar sesión</button>
+        </form>
     </div>
 
     <hr>
 
-    <h2>⭐ Mis Restaurantes Favoritos</h2>
- 
+    <h2>Mis Restaurantes Favoritos</h2>
+
     {% if favoritos %}
         <ul>
         {% for r in favoritos %}
-            <li>{{ r.nombre }}</li>
+            <li>{{ r.name }}</li>
         {% endfor %}
         </ul>
     {% else %}
          <p>No tienes restaurantes favoritos aún.</p>
     {% endif %}
 
-
     <hr>
 
-    <h2>📝 Mis Reseñas</h2>
+    <h2>Mis Reseñas</h2>
     {% if reseñas %}
         <ul class="lista-resenas">
             {% for res in reseñas %}

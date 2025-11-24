@@ -8,6 +8,7 @@
 
 {% block contenido %}
 <div>
+<<<<<<< HEAD
   <h2>Lista de Restaurantes</h2>
   <ul class="all-restaurant-container">
     {% for restaurante in restaurantes %}
@@ -36,6 +37,28 @@
             {% endwith %}
           {% endif %}
         </div>
+=======
+    <h2>Lista de Restaurantes</h2>
+    <ul class="all-restaurant-container">
+        {% for restaurante in restaurantes %}
+            <li class="single-restaurant-container">
+                <div class="restaurant-image">
+                    {% if restaurante.cover_photos %}
+                    <!--path to image in feature-forms-->
+                    <!--src="/media/{{ restaurante.cover_photos.0.path|cut:'data/' }}  to :"-->
+                        <img class="restaurant-photo" src="{{ restaurante.cover_photos.0.image.url }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+                    {% else %}
+                        {% with any=restaurante.photo_set.all.0 %}
+                            {% if any %}
+                            <!--src="/media/{{ any.path|cut:'data/' }}" to: -->
+                                <img class="restaurant-photo" src="{{ any.image.url }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+                            {% else %}
+                                <img class="restaurant-photo" src="{% static 'img/placeholder-restaurant.png' %}" alt="Sin foto">
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                </div>
+>>>>>>> origin/main
 
         <div class="restaurant-name-address-rating">
           <div class="restaurant-name-rating">

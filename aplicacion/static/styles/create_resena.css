@@ -1,0 +1,269 @@
+/* static/styles/create_resena.css */
+
+/* ==========================================================================
+   1. BOTONES Y ESTRUCTURA DEL HEADER (Para abrir el modal)
+   ========================================================================== */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.section-header h2 { margin: 0; }
+
+.btn-primary {
+    background-color: var(--brand);
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover { background-color: var(--brand-700); }
+.btn-primary:active { transform: scale(0.98); }
+
+
+/* ==========================================================================
+   2. VENTANA MODAL (Contenedor y Fondo)
+   ========================================================================== */
+.modal-overlay {
+    display: none;       /* JavaScript lo cambia a flex */
+    position: fixed;     /* FLOTANTE */
+    z-index: 1000;       /* ENCIMA DE TODO */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--panel); 
+    color: var(--fg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    color: var(--brand);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+}
+.close-btn:hover { color: var(--danger, red); }
+
+
+/* ==========================================================================
+   3. FORMULARIO (Inputs y Textareas)
+   ========================================================================== */
+.form-group { margin-bottom: 1.25rem; }
+    
+.form-group label { 
+    display: block; 
+    margin-bottom: 0.5rem; 
+    font-weight: 600; 
+}
+
+.modal-content input[type="number"],
+.modal-content textarea,
+.modal-content input[type="text"] {
+    width: 100%;
+    background: var(--elev);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* Quitar flechas de input number (Chrome, Safari, Edge, Opera) */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Quitar flechas en Firefox */
+input[type=number] { -moz-appearance: textfield; }
+
+
+/* ==========================================================================
+   4. WIDGET DE TAGS (Lista con Scroll)
+   ========================================================================== */
+.checkboxTags {
+    list-style: none;
+    margin: 0;
+    
+    /* Scroll y altura */
+    max-height: 180px;
+    overflow-y: auto;
+    
+    /* Caja contenedora */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--elev);
+    padding: 5px;
+    
+    /* Flex vertical */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.checkboxTags li {
+    border: none;
+    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    transition: background 0.1s;
+}
+
+.checkboxTags li:hover {
+    background-color: color-mix(in srgb, var(--brand) 15%, transparent);
+}
+
+.checkboxTags label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--fg);
+    user-select: none;
+}
+
+.checkboxTags input[type="checkbox"] {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--brand);
+    cursor: pointer;
+}
+
+/* Scrollbar personalizada */
+.checkboxTags::-webkit-scrollbar { width: 8px; }
+.checkboxTags::-webkit-scrollbar-track { background: transparent; }
+.checkboxTags::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 4px;
+    border: 2px solid var(--elev);
+}
+.checkboxTags::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+
+
+/* ==========================================================================
+   5. BOTÓN DE ENVÍO
+   ========================================================================== */
+.submit-btn {
+    width: 100%;
+    background-color: var(--brand);
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+.submit-btn:hover { background-color: var(--brand-700); }
+
+
+/* ==========================================================================
+   6. ESTILOS DE VISUALIZACIÓN (Reseñas ya publicadas)
+   ========================================================================== */
+
+/* Badge del promedio al lado del título */
+.rating-badge {
+    background-color: var(--elev);
+    color: var(--brand);             /* CORREGIDO: Usamos la variable, no naranja fijo */
+    border: 1px solid var(--brand);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.count-muted {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: normal;
+}
+
+/* Foto dentro de la reseña */
+.review-image-container {
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.review-image-container img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+}
+
+.review-image-container img:hover {
+    cursor: zoom-in;
+    opacity: 0.9;
+}
+
+/* Usuario y fecha */
+.review-user {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Etiquetas (Chips) dentro de la reseña */
+.review-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.mini-tag {
+    font-size: 0.75rem;
+    background-color: var(--elev);
+    color: var(--brand);
+    border: 1px solid var(--brand);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    opacity: 0.9;
+}

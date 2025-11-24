@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mis Favoritos{% endblock %}
+
+{% block contenido %}
+
+<h1 style="text-align:center; margin-top: 1rem;"> Mis Restaurantes Favoritos </h1>
+
+<div class="perfil-favoritos" style="max-width: 600px; margin: 2rem auto;">
+
+    {% if favoritos %}
+        <ul>
+            {% for r in favoritos %}
+                <li style="background: var(--elev); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                    <h2 style="margin: 0; color: var(--brand);">{{ r.name }}</h2>
+
+                    <p><strong>📍 Dirección:</strong> {{ r.address }}</p>
+                    <p><strong>💲 Precio:</strong> {{ r.price }}</p>
+                    <p><strong>⭐ Rating:</strong> {{ r.avg_rating }} ({{ r.review_count }} reseñas)</p>
+
+                    <a href="{% url 'detalle_restaurante' r.id %}"
+                    style="
+                        display:inline-block; 
+                        margin-top:0.5rem; 
+                        background: var(--brand); 
+                        color:white; 
+                        padding:0.5rem 1rem; 
+                        border-radius:8px; 
+                        text-decoration:none;">
+                        Ver detalles
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p style="text-align:center; margin-top:2rem; color: var(--danger);">
+            ❌ No tienes restaurantes favoritos aún.
+        </p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

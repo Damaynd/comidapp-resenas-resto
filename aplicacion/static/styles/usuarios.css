@@ -101,3 +101,25 @@ main.container {
     margin-bottom: 0.5rem;
     border-radius: 8px;
 }
+.foto-perfil {
+    width: 150px;          /* tamaño final fijo */
+    height: 150px;
+    border-radius: 50%;    /* que quede circular */
+    object-fit: cover;     /* recorta manteniendo proporción */
+    display: block;
+    margin: 1rem auto;     /* centrado */
+}
+
+.btn-logout {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
+}

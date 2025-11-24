@@ -218,37 +218,97 @@ body { color: var(--fg); }
   padding: 12px;
 }
 
+/* BLOQUE DE CAMBIOS HECHOS EN FEATURE-FORMS */
 .card header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
+  align-items: flex-start; /* cambios en feature-forms: center to flex-start*/
+  gap:10px; /* added */
+  margin-bottom: 8px; /* 6px to 8 px*/
+}
+
+.card header h3 {
+  margin:0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  flex:1;
 }
 
 .badge {
-  background: #0c7a33; /* color detrás del precio (más brillante) */
+    background: var(--brand);       /* Usamos variable verde */
+    color: #ffffff;
+    border: 1px solid var(--brand);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    
+    /* --- LA SOLUCIÓN AL DESORDEN --- */
+    white-space: nowrap;  /* Obliga a que "$ 10000" esté siempre en una línea */
+    flex-shrink: 0;       /* Impide que el círculo se aplaste si falta espacio */
+}
+
+/* Modificado - Ver si borrar */
+/* .badge {
+  background: #0c7a33; /* color detrás del precio (más brillante) *//*
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 4px 12px;
   font-size: var(--fs-base);
   font-weight: 600;
   letter-spacing: .3px;
-}
+} */
 
 .muted { color: var(--muted); }
 
+/* Contenedor de etiquetas */
 .tags {
+    display: flex;
+    gap: 6px; 
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+/* Etiqueta estilo "Review" (Pastilla con borde) */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    
+    /* Diseño visual */
+    background-color: var(--elev);  /* Fondo sutil */
+    color: var(--brand);            /* Texto verde */
+    border: 1px solid var(--brand); /* Borde verde */
+    
+    /* Tamaño y forma */
+    padding: 2px 10px;
+    border-radius: 12px;            /* Bordes redondos */
+    font-size: 0.75rem;             /* Letra pequeña y elegante */
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: .25px;
+}
+
+/* Mensaje de "Sin etiqueta" */
+.tag--empty { 
+    opacity: 0.6; 
+    border-color: var(--border);    /* Borde gris para diferenciarlo */
+    color: var(--muted);            /* Texto gris */
+}
+
+/* Modificar: Ver si borrar */
+
+/* .tags {
   display: flex;
-  gap: 8px; /* más separación para lectura */
+  gap: 8px; /* más separación para lectura *//*
   flex-wrap: wrap;
   margin-top: 10px;
 }
 
 /*Etiqueta que se le asigna a un plato de comida*/
-.tag {
+/* .tag {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--border); /* sólido para mejor definición */
+  border: 1px solid var(--border); /* sólido para mejor definición *//*
   background: var(--chip);
   padding: 6px 12px;
   border-radius: 10px;
@@ -256,10 +316,13 @@ body { color: var(--fg); }
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: .25px;
-}
+} */
 
 /*mensaje de "Sin etiqueta"*/
-.tag--empty { opacity: .6; }
+/*.tag--empty { opacity: .6; } */
+
+/* FIN DE BLOQUE MODIFICADO EN FEATURE-FORMS */
+
 
 .access-list {
   list-style: none;
