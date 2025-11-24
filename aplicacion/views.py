@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect   
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import * 
 from django.db.models import Prefetch
 from aplicacion.models import Restaurant, Photo
@@ -22,8 +22,14 @@ def home(request):
 
 # Cuando haces click en un restaurante de home.html, esta funcion te llevara a detalle_restaurante.html para ver mas detalles
 def detalle_restaurante(request, restaurante_id):
-    restaurante = Restaurant.objects.get(pk=restaurante_id)
-    return render(request, "detalle_restaurante.html", {"restaurante": restaurante})
+    restaurante = get_object_or_404(Restaurant, pk=restaurante_id)
+
+    form = RestaurantReviewForm()
+
+    return render(request, "detalle_restaurante.html", {
+        "restaurante": restaurante,
+        "form": form
+        })
 
 def buscar(request):
     q = request.GET.get('q', '')
@@ -40,7 +46,9 @@ def resenas(request):
     return render(request, 'resenas.html')
 
 # Para feature/forms
-def add_restaurant_review(request):
+def crear_resena(request, restaurante_id):
+    restaurante = get_object_or_404(Restaurant, pk=restaurante_id)
+
     if request.method == 'POST':
         # request.POST: para pasar datos; request.FILES: para pasar archivos
         form =RestaurantReviewForm(request.POST, request.FILES)
@@ -50,29 +58,27 @@ def add_restaurant_review(request):
             # Guardar Review
             # commit=False : da el objeto sin guardarlo en BD
             review = form.save(commit=False)
+            review.restaurant = restaurante
             review.user = request.user      # Asignamos usuario logueado
             review.save()                   # Ahora sí guardamos
 
             # Guardar Tags
-            restaurant = review.restaurant
             selected_tags = form.cleaned_data.get('tags')
             for tag in selected_tags:
-                restaurant.tags.add(tag)
+                restaurante.tags.add(tag)
             
             # Guardar Foto si existe
             uploaded_file = form.cleaned_data.get('photo')
             if uploaded_file:
                 Photo.objects.create(
                     uploaded_by=request.user,
-                    restaurant=restaurant,
+                    restaurant=restaurante,
                     category=Photo.Category.OTHER,
                     category_label="Review de Usuario",
                     image = uploaded_file
                 )
 
-            return redirect('pagina_de_exito') # Crear esta URL para evitar errores en conexión (ej. Doble subida de datos)
-
-    else: # request.method = 'GET'
-        form = RestaurantReviewForm()
-        
-    return render(request, 'formulario.html', {'form': form})
+            return redirect('detalle_restaurante', restaurante_id=restaurante_id)
+    
+    # Si hay error o no es POST
+    return redirect('detalle_restaurante', restaurante_id=restaurante_id)
