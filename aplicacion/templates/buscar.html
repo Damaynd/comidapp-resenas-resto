@@ -24,7 +24,7 @@
                 {% if restaurante.cover_photos %}
                   {% with photo=restaurante.cover_photos.0 %}
                     <img class="restaurant-photo"
-                         src="/media/{{ photo.path|cut:'data/' }}"
+                         src="{{ photo.image.url }}"
                          alt="Foto de {{ restaurante.name }}"
                          loading="lazy">
                   {% endwith %}

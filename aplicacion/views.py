@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from django.db.models import Prefetch, Q, Count
+from django.db.models import Prefetch, Q, Count, Avg
 from aplicacion.models import Restaurant, Photo
 from .forms import RestaurantReviewForm
 from django.contrib.auth.decorators import login_required
