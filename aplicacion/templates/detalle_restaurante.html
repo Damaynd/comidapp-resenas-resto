@@ -3,6 +3,8 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'styles/detalle_restaurante.css' %}">
+
+<link rel="stylesheet" href="{% static 'styles/create_resena.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -52,8 +54,8 @@
 
     <div class="cover">
         {% with cover=restaurante.photos.all.0 %}
-            {% if cover %}
-                <img class="restaurant-cover" src="/media/{{ cover.path|cut:'data/' }}" alt="Foto de {{ restaurante.name }}" loading="lazy">
+            {% if cover  and cover.image %}
+                <img class="restaurant-cover" src="{{ cover.image.url}}" alt="Foto de {{ restaurante.name }}" loading="lazy">
             {% else %}
                 <img class="restaurant-cover" src="{% static 'img/placeholder-restaurant.png' %}" alt="Sin foto">
             {% endif %}
@@ -79,7 +81,7 @@
                 <div class="carousel-track">
                     {% for photo in restaurante.photos.all %}
                         <div class="carousel-slide">
-                            <img src="/media/{{ photo.path|cut:'data/' }}" alt="{{ photo.category_label|default:photo.category }}" loading="lazy">
+                            <img src="{{ photo.image.url}}" alt="{{ photo.category_label|default:photo.category }}" loading="lazy">
                         </div>
                     {% endfor %}
                 </div>
@@ -165,29 +167,99 @@
     </ul>
 </section>
 
+
+<!-- INICIO BLOQUE FEATURE-FORMS -->
 <section class="restaurant-reviews">
-    <h2>Reseñas recientes</h2>
-    <div class="cards">
-        {% for dish in restaurante.dishes.all %}
-            {% for review in dish.reviews.all %}
-                <article class="card review">
-                    <header>
-                        <h3>{{ dish.name }}</h3>
-                        <span class="stars" aria-label="{{ review.rating }} estrellas">
-                            {% for _ in "12345"|slice:":" %}
-                                {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
-                            {% endfor %}
-                        </span>
-                    </header>
-                    <p>{{ review.comment }}</p>
-                    <footer class="muted">Precio pagado: $ {{ review.price_paid }} · {{ review.created_at|date:'Y-m-d H:i' }}</footer>
-                </article>
-            {% endfor %}
-        {% empty %}
-            <p>No hay reseñas registradas.</p>
-        {% endfor %}
+    <div class="section-header">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <h2>Reseñas del Restaurante</h2>
+        
+        <span class="rating-badge">
+            ⭐ {{ restaurante.avg_rating|default:0|floatformat:1 }} 
+            
+            <span class="count-muted">
+                ({% if restaurante.review_count %}{{ restaurante.review_count }}{% else %}{{ restaurante.reviews.count }}{% endif %})
+            </span>
+        </span>
     </div>
+
+    {% if user.is_authenticated %}
+        <button onclick="openModal()" class="btn-primary">+ Añadir Reseña</button>
+    {% else %}
+        <a href="/admin/login/?next={{ request.path }}" class="btn btn--secondary">Inicia sesión</a>
+    {% endif %}
+    </div>
+
+    <div class="cards">
+    {% for review in restaurante.reviews.all %}
+        <article class="card review">
+            <header>
+                <div class="review-user">
+                    <h3>{{ review.user.username }}</h3>
+                    <footer class="muted" style="font-size: 0.8rem;">{{ review.created_at|date:'d/m/Y' }}</footer>
+                </div>
+                <span class="stars">⭐ {{ review.rating }}</span>
+            </header>
+            
+            <p>{{ review.comment }}</p>
+            {% if review.tags.all %}
+                <div class="review-tags">
+                    {% for tag in review.tags.all %}
+                        <span class="mini-tag">{{ tag.name}} </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if review.photo %}
+                <div class="review-image-container">
+                    <a href="{{ review.photo.url }}" target="_blank">
+                        <img src="{{ review.photo.url }}" alt="Foto de reseña" loading="lazy">
+                    </a>
+                </div>
+            {% endif %}
+            
+        </article>
+    {% empty %}
+        <p class="no-reviews-msg">No hay reseñas para este restaurante aún.</p>
+    {% endfor %}
+</div>
 </section>
+
+<div id="reviewModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Tu opinión sobre {{ restaurante.name }}</h2>
+        
+        <form method="POST" action="{% url 'crear_resena' restaurante.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label>{{ form.rating.label }}</label>
+                {{ form.rating }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.comment.label }}</label>
+                {{ form.comment }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.tags.label }}</label>
+                {{ form.tags }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.photo.label }}</label>
+                {{ form.photo }}
+            </div>
+
+            <button type="submit" class="submit-btn">Enviar Opinión</button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/create_resena.js' %}"></script>
+
+<!-- FIN BLOQUE FEATURE-FORMS -->
 
 <p><a href="/">← Volver al listado</a></p>
 
