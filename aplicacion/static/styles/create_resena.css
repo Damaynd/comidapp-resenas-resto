@@ -131,3 +131,30 @@
     margin-top: 1rem;
 }
 .submit-btn:hover { background-color: var(--brand-700); }
+
+
+/* Badge del promedio al lado del título */
+
+
+
+/* Badge del promedio al lado del título (VERSIÓN VERDE / BRAND) */
+.rating-badge {
+    background-color: var(--elev);   /* Fondo sutil (el mismo de tus inputs) */
+    color: #f59e0b;             /* Tu verde corporativo */
+    border: 1px solid var(--brand);  /* Borde verde para definirlo bien */
+    padding: 4px 12px;
+    border-radius: 20px;             /* Bordes muy redondos (estilo píldora) */
+    font-size: 1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra muy suave */
+}
+
+/* El número de reseñas entre paréntesis */
+.count-muted {
+    font-size: 0.85rem;
+    color: var(--muted);             /* Color grisáceo de tu tema */
+    font-weight: normal;
+}

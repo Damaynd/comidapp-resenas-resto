@@ -148,16 +148,22 @@
 <!--feature-forms-->
 <section class="restaurant-reviews">
     <div class="section-header">
-    <h2>Reseñas del Restaurante</h2>
-    
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <h2>Reseñas del Restaurante</h2>
+        
+        <span class="rating-badge">
+            ⭐ {{ restaurante.avg_rating|default:0|floatformat:1 }} 
+            
+            <span class="count-muted">
+                ({% if restaurante.review_count %}{{ restaurante.review_count }}{% else %}{{ restaurante.reviews.count }}{% endif %})
+            </span>
+        </span>
+    </div>
+
     {% if user.is_authenticated %}
-        <button onclick="openModal()" class="btn-primary">
-            + Añadir Reseña
-        </button>
+        <button onclick="openModal()" class="btn-primary">+ Añadir Reseña</button>
     {% else %}
-        <a href="/admin/login/?next={{ request.path }}" class="btn btn--secondary" style="font-size: 0.9rem;">
-            Inicia sesión para opinar
-        </a>
+        <a href="/admin/login/?next={{ request.path }}" class="btn btn--secondary">Inicia sesión</a>
     {% endif %}
     </div>
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import * 
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Avg
 from aplicacion.models import Restaurant, Photo
 from .forms import RestaurantReviewForm
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 # from .models import Photo
 # from .forms import RestaurantReviewForm
 # from django.contrib.auth.decorators import login_required
+# from django.db.models import Avg
 
 
 # Create your views here.
@@ -81,7 +82,15 @@ def crear_resena(request, restaurante_id):
                     image = uploaded_file
                 )
 
-            return redirect('detalle_restaurante', restaurante_id=restaurante_id)
+            # Para el promedio
+        nuevo_promedio = restaurante.reviews.aggregate(Avg('rating'))['rating__avg']
+        cantidad_resenas = restaurante.reviews.count()
+
+        restaurante.avg_rating = round(nuevo_promedio, 1) if nuevo_promedio else 0
+        restaurante.review_count = cantidad_resenas
+        restaurante.save()
+
+        return redirect('detalle_restaurante', restaurante_id=restaurante_id)
     
     # Si hay error o no es POST
     return redirect('detalle_restaurante', restaurante_id=restaurante_id)
