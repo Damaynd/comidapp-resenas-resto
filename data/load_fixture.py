@@ -14,10 +14,10 @@ from aplicacion.models import (
     # relaciones
     RestaurantTag, DishTag,
     # opcionales
-    Photo, Review,
+    Photo, RestaurantReview,
 )
 
-# === dónde están tus CSV ===
+#csv
 BASE = Path(settings.BASE_DIR) / "data" / "fixtures"
 
 # ---------- helpers ----------
@@ -244,6 +244,12 @@ def load_photos():
         if uid:
             try: user = User.objects.get(id=uid)
             except ObjectDoesNotExist: pass
+            
+        # Se quitó el prefijo "data/" para que Django busque correctamente
+        img_path = norm(r.get("path"))
+        if img_path.startswith("data/"):
+            img_path = img_path[5:]  # Quitar "data/"
+        
         # created_at es auto_now_add: no se setea desde CSV
         Photo.objects.update_or_create(
             id=to_int(r["id"]),
@@ -253,7 +259,7 @@ def load_photos():
                 dish=dish,
                 category=norm(r.get("category")),
                 category_label=norm(r.get("category_label") or ""),
-                path=norm(r.get("path")),
+                image=img_path,  # Usar la ruta corregida
                 taken_at=parse_date(r.get("taken_at")),
                 is_approved=bool(to_bool(r.get("is_approved"), False)),
             ),
@@ -270,18 +276,17 @@ def load_reviews():
     c, miss = 0, 0
     for r in csv_rows(path):
         try:
-            dish = Dish.objects.get(id=to_int(r["dish_id"]))
+            restaurant = Restaurant.objects.get(id=to_int(r["restaurant_id"]))
             user = User.objects.get(id=to_int(r["user_id"]))
         except ObjectDoesNotExist:
             miss += 1; continue
-        Review.objects.update_or_create(
+        RestaurantReview.objects.update_or_create(
             id=to_int(r["id"]),
             defaults=dict(
-                dish=dish,
+                restaurant=restaurant,
                 user=user,
                 rating=to_float(r.get("rating"), 0.0) or 0.0,
                 comment=norm(r.get("comment") or ""),
-                price_paid=to_int(r.get("price_paid"), 0) or 0,
             ),
         )
         c += 1
