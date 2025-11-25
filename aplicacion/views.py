@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.db.models import Prefetch, Q, Count, Avg
-from aplicacion.models import Restaurant, Photo
+from aplicacion.models import Restaurant, Photo, Dish, Tag, Cuisine
 from .forms import RestaurantReviewForm
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -47,8 +47,8 @@ def buscar(request):
     price_max_raw = (request.GET.get("price_max") or "").strip()
     # support multiple tag and cuisine selections
     tag_raw = (request.GET.get("tag") or "").strip()
-    tags_list = request.GET.getlist('tag')
-    cuisines_list = request.GET.getlist('cuisine')
+    tags_list = [t for t in request.GET.getlist('tag') if t.strip()]
+    cuisines_list = [c for c in request.GET.getlist('cuisine') if c.strip()]
 
     # helpers para el casteo
     def to_int(s):
