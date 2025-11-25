@@ -1,0 +1,111 @@
+/* PARA RESEÑAS */
+/* static/styles/usuarios.css */
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: var(--brand);
+    margin-bottom: 2rem;
+}
+
+/* Contenedor de la lista (quitamos los puntos y márgenes por defecto) */
+.lista-resenas {
+    list-style: none; /* Quita el punto (bullet) */
+    padding: 0;
+    margin: 0 auto;
+    max-width: 800px; /* Ancho máximo para que no se estire demasiado */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre tarjeta y tarjeta */
+}
+
+/* LA TARJETA INDIVIDUAL (Bloque con borde curvo) */
+.resena-item {
+    background-color: var(--panel);     /* Fondo según el tema (blanco u oscuro) */
+    border: 1px solid var(--border);    /* Borde sutil */
+    border-radius: 16px;                /* Borde curvo */
+    padding: 1.5rem;                    /* Espacio interno */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra suave */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el mouse por encima */
+.resena-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    border-color: var(--brand);
+}
+
+/* Cabecera de la tarjeta (Nombre Restaurante + Fecha) */
+.resena-header {
+    display: flex;
+    justify-content: space-between; /* Uno a la izquierda, otro a la derecha */
+    align-items: center;
+    border-bottom: 1px solid var(--border); /* Línea divisoria */
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+/* Nombre del restaurante */
+.resena-header a {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.resena-header a:hover {
+    text-decoration: underline;
+}
+
+/* Fecha */
+.resena-header .fecha {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+/* El comentario en sí */
+.resena-item p {
+    line-height: 1.6;
+    color: var(--fg);
+    margin-bottom: 1.5rem;
+}
+
+/* Botones de acción (Editar / Eliminar) */
+.resena-acciones {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; /* Alineados a la derecha */
+}
+
+/* Estilo base de los botones */
+.btn-editar, .btn-eliminar {
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+/* Botón Editar (Estilo secundario/gris) */
+.btn-editar {
+    background-color: var(--elev);
+    color: var(--fg);
+    border: 1px solid var(--border);
+}
+.btn-editar:hover {
+    border-color: var(--brand);
+    color: var(--brand);
+}
+
+/* Botón Eliminar (Estilo peligro/rojo) */
+.btn-eliminar {
+    background-color: rgba(220, 38, 38, 0.1); /* Rojo muy suave transparente */
+    color: #ef4444; /* Rojo */
+    border: 1px solid transparent;
+}
+.btn-eliminar:hover {
+    background-color: #ef4444;
+    color: white;
+}
