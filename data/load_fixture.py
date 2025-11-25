@@ -1,7 +1,20 @@
-# data/load_fixture.py
+import os
+import sys
 import csv
 from pathlib import Path
 from datetime import datetime
+
+# --- preparar entorno Django ---
+
+# BASE_DIR = carpeta raíz del proyecto (donde está manage.py)
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))  # para que Python encuentre 'aplicacion'
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "miespacio.settings")
+
+import django
+django.setup()
+
 from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
@@ -17,33 +30,44 @@ from aplicacion.models import (
     Photo, RestaurantReview,
 )
 
-#csv
+# csv
 BASE = Path(settings.BASE_DIR) / "data" / "fixtures"
 
 # ---------- helpers ----------
 def to_float(v, default=None):
-    try: return float(v)
-    except (ValueError, TypeError): return default
+    try:
+        return float(v)
+    except (ValueError, TypeError):
+        return default
 
 def to_int(v, default=None):
-    try: return int(v)
-    except (ValueError, TypeError): return default
+    try:
+        return int(v)
+    except (ValueError, TypeError):
+        return default
 
 def to_bool(v, default=None):
-    if v is None: return default
+    if v is None:
+        return default
     s = str(v).strip().lower()
-    if s in ("true","1","t","yes","y","si","sí"): return True
-    if s in ("false","0","f","no","n"): return False
+    if s in ("true", "1", "t", "yes", "y", "si", "sí"):
+        return True
+    if s in ("false", "0", "f", "no", "n"):
+        return False
     return default
 
-def norm(v): return "" if v is None else str(v).strip()
+def norm(v):
+    return "" if v is None else str(v).strip()
 
 def parse_date(s):
     s = norm(s)
-    if not s: return None
+    if not s:
+        return None
     for fmt in ("%Y-%m-%d", "%Y/%m/%d"):
-        try: return datetime.strptime(s, fmt).date()
-        except ValueError: pass
+        try:
+            return datetime.strptime(s, fmt).date()
+        except ValueError:
+            pass
     return None
 
 def csv_rows(path: Path):
@@ -51,7 +75,8 @@ def csv_rows(path: Path):
         for row in csv.DictReader(f):
             yield {k: (v.strip() if isinstance(v, str) else v) for k, v in row.items()}
 
-def nf(name): print("Not found:", (BASE / name).resolve())
+def nf(name):
+    print("Not found:", (BASE / name).resolve())
 
 # ---------- loaders ----------
 @transaction.atomic

@@ -13,45 +13,6 @@
       <button type="submit">Buscar</button>
       <button type="button" class="btn-filtros" data-action="open-filters" aria-haspopup="dialog">🔍 Filtros</button>
     </div>
-
-    <details class="search-panel__filters">
-      <summary>Filtros avanzados</summary>
-      <div class="search-panel__filters-grid">
-        <label>
-          Rating mínimo
-          <input
-            type="number"
-            name="rating_min"
-            min="0"
-            max="5"
-            step="1"
-            value="{{ rating_min }}"
-          >
-        </label>
-
-        <label>
-          Precio máximo (categoría)
-          <select name="price_max">
-            <option value="">Cualquiera</option>
-            <option value="1" {% if price_max == "1" %}selected{% endif %}>$</option>
-            <option value="2" {% if price_max == "2" %}selected{% endif %}>$$</option>
-            <option value="3" {% if price_max == "3" %}selected{% endif %}>$$$</option>
-            <option value="4" {% if price_max == "4" %}selected{% endif %}>$$$$</option>
-            <option value="5" {% if price_max == "5" %}selected{% endif %}>$$$$$</option>
-          </select>
-        </label>
-
-        <label>
-          Tag
-          <input
-            type="text"
-            name="tag"
-            value="{{ tag }}"
-            placeholder="ej. vegan, sin-gluten"
-          >
-        </label>
-      </div>
-    </details>
   </form>
 </section>
 
