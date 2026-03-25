@@ -1,3 +1,6 @@
+# NOTE: This is a project developed by more contributors than just me. Also, there're instructions for running the server, based on the original private repository.
+#       if you want to test it, just replace repository address by this one.
+
 # ComidApp
 
 ## Descripción
